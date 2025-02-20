@@ -56,7 +56,9 @@ class LoginScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: onForgotPassword,
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, AppRoutes.forget);
+                  },
                   child: const Text('Forgot Password?'),
                 ),
               ),
@@ -65,7 +67,8 @@ class LoginScreen extends StatelessWidget {
                 text: 'Login',
                 onPressed: onLogin ??
                     () {
-                      Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+                      Navigator.pushReplacementNamed(
+                          context, AppRoutes.dashboard);
                     },
               ),
               const SizedBox(height: 24),
