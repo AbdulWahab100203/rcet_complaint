@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/complaint.dart';
+import '../../routes/app_routes.dart';
 
 class DashboardScreen extends StatelessWidget {
   final List<Complaint> complaints = [
@@ -30,8 +31,13 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, AppRoutes.setting),
+          ),
+          IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () => Navigator.pushNamed(context, '/new-complaint'),
+            onPressed: () =>
+                Navigator.pushNamed(context, AppRoutes.newComplaint),
           ),
         ],
       ),

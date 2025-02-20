@@ -5,6 +5,7 @@ import '../screens/auth/signup_screen.dart';
 import '../screens/auth/signup_form_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/auth/forget_screen.dart';
+import '../screens/dashboard/setting_screen.dart';
 
 class AppRoutes {
   static const String welcome = '/';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const String complaintDetails = '/complaint-details';
   static const String signUpForm = '/sign-up-form';
   static const String forget = '/forget';
+  static const String setting = '/setting';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -40,6 +42,10 @@ class AppRoutes {
       case dashboard:
         return MaterialPageRoute(
           builder: (_) => DashboardScreen(),
+        );
+      case setting:
+        return MaterialPageRoute(
+          builder: (_) => SettingScreen(),
         );
       case forget:
         return MaterialPageRoute(
