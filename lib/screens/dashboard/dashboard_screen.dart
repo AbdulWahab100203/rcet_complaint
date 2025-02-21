@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/complaint.dart';
 import '../../routes/app_routes.dart';
+import '../../widgets/custom_bottom_bar.dart';
 
 class DashboardScreen extends StatelessWidget {
   final List<Complaint> complaints = [
@@ -41,62 +42,69 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: complaints.length,
-        padding: const EdgeInsets.all(16),
-        itemBuilder: (context, index) {
-          final complaint = complaints[index];
-          return Card(
-            elevation: 2,
-            margin: const EdgeInsets.only(bottom: 16),
-            child: ListTile(
-              title: Text(
-                complaint.title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 4),
-                  Text(complaint.department),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Submitted: ${complaint.dateSubmitted.toString().split(' ')[0]}',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: complaints.length,
+              padding: const EdgeInsets.all(16),
+              itemBuilder: (context, index) {
+                final complaint = complaints[index];
+                return Card(
+                  elevation: 2,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: ListTile(
+                    title: Text(
+                      complaint.title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 4),
+                        Text(complaint.department),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Submitted: ${complaint.dateSubmitted.toString().split(' ')[0]}',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: complaint.status == 'Pending'
+                            ? Colors.orange
+                            : complaint.status == 'In Progress'
+                                ? Colors.blue
+                                : Colors.green,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        complaint.status,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      '/complaint-details',
+                      arguments: complaint,
                     ),
                   ),
-                ],
-              ),
-              trailing: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: complaint.status == 'Pending'
-                      ? Colors.orange
-                      : complaint.status == 'In Progress'
-                          ? Colors.blue
-                          : Colors.green,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  complaint.status,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-              onTap: () => Navigator.pushNamed(
-                context,
-                '/complaint-details',
-                arguments: complaint,
-              ),
+                );
+              },
             ),
-          );
-        },
+          ),
+          const CustomBottomBar(selectedIndex: 0),
+        ],
       ),
     );
   }
