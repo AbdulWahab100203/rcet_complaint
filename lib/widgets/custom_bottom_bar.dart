@@ -65,6 +65,7 @@ class CustomBottomBar extends StatelessWidget {
       onTap: onTap,
       child: Icon(
         icon,
+        // ignore: deprecated_member_use
         color: isSelected ? Colors.white : Colors.white.withOpacity(0.5),
         size: 24,
       ),

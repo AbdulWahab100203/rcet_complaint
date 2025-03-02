@@ -12,6 +12,7 @@ class DashboardScreen extends StatelessWidget {
       dateSubmitted: DateTime.now().subtract(const Duration(days: 1)),
       status: 'Pending',
     ),
+
     Complaint(
       title: 'Broken Chair',
       description: 'Chair broken in Room 201',
@@ -19,6 +20,14 @@ class DashboardScreen extends StatelessWidget {
       dateSubmitted: DateTime.now().subtract(const Duration(days: 2)),
       status: 'In Progress',
     ),
+    Complaint(
+      title: 'Broken Chair',
+      description: 'Chair broken in Room 201',
+      department: 'Maintenance',
+      dateSubmitted: DateTime.now().subtract(const Duration(days: 2)),
+      status: 'In Progress',
+    ),
+
     // Add more sample complaints here
   ];
 
@@ -30,6 +39,7 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Complaints Dashboard'),
         backgroundColor: Theme.of(context).primaryColor,
+        titleTextStyle: TextStyle(color: Colors.white),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -76,7 +86,8 @@ class DashboardScreen extends StatelessWidget {
                       ],
                     ),
                     trailing: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: complaint.status == 'Pending'
                             ? Colors.orange

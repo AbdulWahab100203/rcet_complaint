@@ -20,6 +20,7 @@ class MenuFabButton extends StatelessWidget {
         color: Colors.amber,
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.black.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 6,
