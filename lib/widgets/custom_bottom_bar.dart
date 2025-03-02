@@ -18,7 +18,7 @@ class CustomBottomBar extends StatelessWidget {
       margin: const EdgeInsets.only(left: 2, right: 2),
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A4B),
-        borderRadius: BorderRadius.circular(25),
+        // borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +34,8 @@ class CustomBottomBar extends StatelessWidget {
             context,
             icon: Icons.grid_view,
             isSelected: selectedIndex == 1,
-            onTap: () {},
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, AppRoutes.complaintbox),
           ),
           const MenuFabButton(),
           _buildNavItem(

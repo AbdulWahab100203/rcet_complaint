@@ -22,22 +22,25 @@ class SignUpScreen extends StatelessWidget {
                 height: 150,
               ),
               const SizedBox(height: 40),
-
+              Container(
+                margin: EdgeInsets.only(bottom: 90),
+              ),
               // Social Login Buttons
+              const SizedBox(height: 10),
               SocialLoginButton(
                 icon: Icons.apple,
                 onPressed: () {},
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
               SocialLoginButton(
                 icon: Icons.email,
                 onPressed: () {},
                 backgroundColor: Colors.white,
                 textColor: Colors.black,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
               SocialLoginButton(
                 icon: Icons.facebook,
                 onPressed: () {},
@@ -45,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                 textColor: Colors.white,
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               const Row(
                 children: [
                   Expanded(child: Divider()),
@@ -60,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               PrimaryButton(
                 text: 'Sign up with E-mail',
                 onPressed: () {

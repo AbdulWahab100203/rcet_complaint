@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
-import '../../models/complaint.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/custom_bottom_bar.dart';
+import '../../widgets/primary_button.dart';
+
+class Complaint {
+  final String title;
+  final String description;
+  final String department;
+  final DateTime dateSubmitted;
+  final String status;
+
+  Complaint({
+    required this.title,
+    required this.description,
+    required this.department,
+    required this.dateSubmitted,
+    required this.status,
+  });
+}
 
 class DashboardScreen extends StatelessWidget {
   final List<Complaint> complaints = [
@@ -40,20 +56,10 @@ class DashboardScreen extends StatelessWidget {
         title: const Text('Complaints Dashboard'),
         backgroundColor: Theme.of(context).primaryColor,
         titleTextStyle: TextStyle(color: Colors.white),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.pushNamed(context, AppRoutes.setting),
-          ),
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () =>
-                Navigator.pushNamed(context, AppRoutes.newComplaint),
-          ),
-        ],
       ),
       body: Column(
         children: [
+          const SizedBox(height: 40),
           Expanded(
             child: ListView.builder(
               itemCount: complaints.length,

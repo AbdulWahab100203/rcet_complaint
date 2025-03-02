@@ -29,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               PrimaryButton(
-                text: 'Login',
+                text: 'I have an account',
                 onPressed: () {
                   Navigator.pushNamed(context, AppRoutes.login);
                 },
