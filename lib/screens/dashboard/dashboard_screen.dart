@@ -52,11 +52,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Complaints Dashboard'),
-        backgroundColor: Theme.of(context).primaryColor,
-        titleTextStyle: TextStyle(color: Colors.white),
-      ),
       body: Column(
         children: [
           const SizedBox(height: 40),

@@ -54,7 +54,8 @@ class SettingScreen extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => Navigator.pushNamed(
+                              context, AppRoutes.editProfile),
                           child: const Text('Edit profile'),
                         ),
                       ],
@@ -79,7 +80,8 @@ class SettingScreen extends StatelessWidget {
                         ListTile(
                           leading: const Icon(Icons.lock_outline),
                           title: const Text('Change Password'),
-                          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                          trailing:
+                              const Icon(Icons.arrow_forward_ios, size: 16),
                           onTap: () {},
                         ),
                         const Divider(height: 1),
@@ -113,21 +115,24 @@ class SettingScreen extends StatelessWidget {
                         ListTile(
                           leading: const Icon(Icons.help_outline),
                           title: const Text('Help'),
-                          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                          trailing:
+                              const Icon(Icons.arrow_forward_ios, size: 16),
                           onTap: () {},
                         ),
                         const Divider(height: 1),
                         ListTile(
                           leading: const Icon(Icons.policy_outlined),
                           title: const Text('Policies'),
-                          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                          trailing:
+                              const Icon(Icons.arrow_forward_ios, size: 16),
                           onTap: () {},
                         ),
                         const Divider(height: 1),
                         ListTile(
                           leading: const Icon(Icons.report_problem_outlined),
                           title: const Text('Report Problem'),
-                          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                          trailing:
+                              const Icon(Icons.arrow_forward_ios, size: 16),
                           onTap: () {},
                         ),
                       ],
@@ -149,7 +154,8 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, AppRoutes.login);
+                        Navigator.pushReplacementNamed(
+                            context, AppRoutes.login);
                       },
                     ),
                   ),

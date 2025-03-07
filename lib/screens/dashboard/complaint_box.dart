@@ -11,20 +11,25 @@ class ComplaintScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Complaint Box"),
-        backgroundColor: Color(0xFF1A1A4B),
-        elevation: 0,
-      ),
       body: Column(
         children: [
-          PrimaryButton(
-            text: 'Create Complaint Box',
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.login);
-            },
-            backgroundColor: Colors.white,
-            textColor: Colors.black,
+          const Padding(
+            padding: EdgeInsets.only(top: 16),
+            child: Text(
+              'Complaint Box',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 25),
+            child: PrimaryButton(
+              text: 'Create Complaint Box',
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.login);
+              },
+              backgroundColor: Colors.white,
+              textColor: Colors.black,
+            ),
           ),
           Expanded(
             child: ListView(
@@ -91,8 +96,7 @@ class ComplaintScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomBar(
-          selectedIndex: 1), // Selected index for "Complaint Box"
+      bottomNavigationBar: const CustomBottomBar(selectedIndex: 1),
     );
   }
 }

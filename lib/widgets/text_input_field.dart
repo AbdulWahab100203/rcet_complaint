@@ -35,7 +35,7 @@ class TextInputField extends StatelessWidget {
           errorText: errorText,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: 16,
+            vertical: 10,
           ),
           border: InputBorder.none,
           hintStyle: TextStyle(

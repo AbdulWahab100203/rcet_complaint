@@ -7,6 +7,9 @@ import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/auth/forget_screen.dart';
 import '../screens/dashboard/setting_screen.dart';
 import '../screens/dashboard/complaint_box.dart';
+import '../screens/dashboard/event.dart';
+import '../screens/dashboard/main_dashboard_screen.dart';
+import '../screens/dashboard/edit_profile.dart';
 
 class AppRoutes {
   static const String welcome = '/';
@@ -19,6 +22,9 @@ class AppRoutes {
   static const String forget = '/forget';
   static const String setting = '/setting';
   static const String complaintbox = '/ComplaintScreen';
+  static const String event = '/EventScheduleScreen';
+  static const String mainDashboard = '/ComplaintScreenMain';
+  static const String editProfile = '/edit-profile';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -56,6 +62,18 @@ class AppRoutes {
       case complaintbox:
         return MaterialPageRoute(
           builder: (_) => const ComplaintScreen(),
+        );
+      case event:
+        return MaterialPageRoute(
+          builder: (_) => EventScheduleScreen(),
+        );
+      case mainDashboard:
+        return MaterialPageRoute(
+          builder: (_) => ComplaintScreenMain(),
+        );
+      case editProfile:
+        return MaterialPageRoute(
+          builder: (_) => EditProfileScreen(),
         );
       default:
         return MaterialPageRoute(

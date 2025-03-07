@@ -9,14 +9,14 @@ class ComplaintBox extends StatelessWidget {
   final Color progressColor;
 
   const ComplaintBox({
-    Key? key,
+    super.key,
     required this.title,
     required this.total,
     required this.solved,
     required this.remaining,
     required this.icon,
     required this.progressColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

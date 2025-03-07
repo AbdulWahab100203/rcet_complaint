@@ -27,8 +27,8 @@ class CustomBottomBar extends StatelessWidget {
             context,
             icon: Icons.home_outlined,
             isSelected: selectedIndex == 0,
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, AppRoutes.dashboard),
+            onTap: () => Navigator.pushReplacementNamed(
+                context, AppRoutes.mainDashboard),
           ),
           _buildNavItem(
             context,
@@ -42,7 +42,8 @@ class CustomBottomBar extends StatelessWidget {
             context,
             icon: Icons.calendar_today,
             isSelected: selectedIndex == 2,
-            onTap: () {},
+            onTap: () =>
+                Navigator.pushReplacementNamed(context, AppRoutes.event),
           ),
           _buildNavItem(
             context,

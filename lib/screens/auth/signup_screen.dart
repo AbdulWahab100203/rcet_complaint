@@ -63,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               PrimaryButton(
                 text: 'Sign up with E-mail',
                 onPressed: () {
@@ -71,7 +71,7 @@ class SignUpScreen extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

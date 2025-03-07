@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               TextInputField(
                 controller: emailController,
                 hintText: 'Email',
@@ -68,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                 onPressed: onLogin ??
                     () {
                       Navigator.pushReplacementNamed(
-                          context, AppRoutes.dashboard);
+                          context, AppRoutes.mainDashboard);
                     },
               ),
               const SizedBox(height: 24),

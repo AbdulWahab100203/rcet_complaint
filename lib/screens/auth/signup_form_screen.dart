@@ -19,7 +19,7 @@ class SignUpFormScreen extends StatelessWidget {
                 'assets/images/logo.png',
                 height: 120,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 35),
               const Text(
                 'E-mail address',
                 style: TextStyle(
@@ -28,7 +28,7 @@ class SignUpFormScreen extends StatelessWidget {
                   color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 7),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
@@ -39,7 +39,7 @@ class SignUpFormScreen extends StatelessWidget {
                     hintText: 'ali@gmail.com',
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
-                      vertical: 16,
+                      vertical: 10,
                     ),
                     border: InputBorder.none,
                     hintStyle: TextStyle(
@@ -48,7 +48,7 @@ class SignUpFormScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               const Text(
                 'Password',
                 style: TextStyle(
@@ -69,7 +69,7 @@ class SignUpFormScreen extends StatelessWidget {
                     hintText: '••••••••••',
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
-                      vertical: 16,
+                      vertical: 10,
                     ),
                     border: InputBorder.none,
                     hintStyle: TextStyle(
@@ -78,7 +78,7 @@ class SignUpFormScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               const Text(
                 'Enter Password Again',
                 style: TextStyle(
@@ -99,7 +99,7 @@ class SignUpFormScreen extends StatelessWidget {
                     hintText: '••••••••••',
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
-                      vertical: 16,
+                      vertical: 10,
                     ),
                     border: InputBorder.none,
                     hintStyle: TextStyle(
@@ -126,7 +126,7 @@ class SignUpFormScreen extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(
-                        context, AppRoutes.dashboard);
+                        context, AppRoutes.mainDashboard);
                   },
                   child: const Text(
                     'Get started',
@@ -138,7 +138,7 @@ class SignUpFormScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
