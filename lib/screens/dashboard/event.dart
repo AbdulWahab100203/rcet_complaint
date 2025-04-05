@@ -3,7 +3,15 @@ import '../../widgets/event_card.dart';
 import '../../widgets/date_selector.dart';
 import '../../widgets/custom_bottom_bar.dart';
 
-class EventScheduleScreen extends StatelessWidget {
+class EventScheduleScreen extends StatefulWidget {
+  EventScheduleScreen({super.key});
+
+  @override
+  State<EventScheduleScreen> createState() => _EventScheduleScreenState();
+}
+
+class _EventScheduleScreenState extends State<EventScheduleScreen> {
+  int _selectedIndex = 1;  // Events tab is selected
   final List<Map<String, dynamic>> events = [
     {
       "id": 1,
@@ -21,8 +29,6 @@ class EventScheduleScreen extends StatelessWidget {
     {"id": 4, "title": "Other Event", "time": "11:00 AM", "status": "red"},
     {"id": 5, "title": "Other Event", "time": "11:00 AM", "status": "red"},
   ];
-
-  EventScheduleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,28 @@ class EventScheduleScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomBar(selectedIndex: 2),
+      bottomNavigationBar: CustomBottomBar(
+        selectedIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          // Handle navigation based on index
+          switch (index) {
+            case 0: // Home
+              Navigator.pushNamed(context, '/home');
+              break;
+            case 1: // Events
+              break;  // Already on events
+            case 2: // Complaints
+              Navigator.pushNamed(context, '/complaints');
+              break;
+            case 3: // Profile
+              Navigator.pushNamed(context, '/profile');
+              break;
+          }
+        },
+      ),
     );
   }
 }

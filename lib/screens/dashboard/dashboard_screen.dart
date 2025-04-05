@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../routes/app_routes.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../../widgets/primary_button.dart';
 
 class Complaint {
   final String title;
@@ -19,7 +17,15 @@ class Complaint {
   });
 }
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _selectedIndex = 0;
   final List<Complaint> complaints = [
     Complaint(
       title: 'Network Issue in Lab 3',
@@ -46,8 +52,6 @@ class DashboardScreen extends StatelessWidget {
 
     // Add more sample complaints here
   ];
-
-  DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,28 @@ class DashboardScreen extends StatelessWidget {
               },
             ),
           ),
-          const CustomBottomBar(selectedIndex: 0),
+          CustomBottomBar(
+            selectedIndex: _selectedIndex,
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+              // Handle navigation based on index
+              switch (index) {
+                case 0: // Home
+                  break;
+                case 1: // Events
+                  Navigator.pushNamed(context, '/events');
+                  break;
+                case 2: // Complaints
+                  Navigator.pushNamed(context, '/complaints');
+                  break;
+                case 3: // Profile
+                  Navigator.pushNamed(context, '/profile');
+                  break;
+              }
+            },
+          ),
         ],
       ),
     );

@@ -50,7 +50,9 @@ class ForgetScreen extends StatelessWidget {
               const SizedBox(height: 24),
               PrimaryButton(
                 text: 'Send Reset Link',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, AppRoutes.login);
+                },
               ),
               const SizedBox(height: 24),
               Row(

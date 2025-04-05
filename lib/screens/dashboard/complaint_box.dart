@@ -4,8 +4,15 @@ import '../../widgets/complaint_box.dart';
 import '../../widgets/primary_button.dart';
 import '../../routes/app_routes.dart';
 
-class ComplaintScreen extends StatelessWidget {
+class ComplaintScreen extends StatefulWidget {
   const ComplaintScreen({super.key});
+
+  @override
+  State<ComplaintScreen> createState() => _ComplaintScreenState();
+}
+
+class _ComplaintScreenState extends State<ComplaintScreen> {
+  int _selectedIndex = 1;  // Complaints tab is selected
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +103,28 @@ class ComplaintScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomBar(selectedIndex: 1),
+      bottomNavigationBar: CustomBottomBar(
+        selectedIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          // Handle navigation based on index
+          switch (index) {
+            case 0: // Home
+              Navigator.pushNamed(context, '/home');
+              break;
+            case 1: // Events
+              Navigator.pushNamed(context, '/events');
+              break;
+            case 2: // Complaints
+              break;  // Already on complaints
+            case 3: // Profile
+              Navigator.pushNamed(context, '/profile');
+              break;
+          }
+        },
+      ),
     );
   }
 }

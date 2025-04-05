@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/custom_bottom_bar.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
+
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  int _selectedIndex = 3;  // Profile/Settings tab is selected
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +170,28 @@ class SettingScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const CustomBottomBar(selectedIndex: 3),
+            CustomBottomBar(
+              selectedIndex: _selectedIndex,
+              onTap: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+                // Handle navigation based on index
+                switch (index) {
+                  case 0: // Home
+                    Navigator.pushNamed(context, '/home');
+                    break;
+                  case 1: // Events
+                    Navigator.pushNamed(context, '/events');
+                    break;
+                  case 2: // Complaints
+                    Navigator.pushNamed(context, '/complaints');
+                    break;
+                  case 3: // Profile
+                    break;  // Already on profile/settings
+                }
+              },
+            ),
           ],
         ),
       ),

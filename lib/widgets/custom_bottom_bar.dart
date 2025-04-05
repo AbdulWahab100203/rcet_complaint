@@ -1,76 +1,42 @@
 import 'package:flutter/material.dart';
-import '../routes/app_routes.dart';
-import 'menu_fab_button.dart';
 
 class CustomBottomBar extends StatelessWidget {
   final int selectedIndex;
+  final Function(int) onTap;
 
   const CustomBottomBar({
     super.key,
     required this.selectedIndex,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      // margin: const EdgeInsets.all(10),
-      margin: const EdgeInsets.only(left: 2, right: 2),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A4B),
-        // borderRadius: BorderRadius.circular(25),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildNavItem(
-            context,
-            icon: Icons.home_outlined,
-            isSelected: selectedIndex == 0,
-            onTap: () => Navigator.pushReplacementNamed(
-                context, AppRoutes.mainDashboard),
-          ),
-          _buildNavItem(
-            context,
-            icon: Icons.grid_view,
-            isSelected: selectedIndex == 1,
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, AppRoutes.complaintbox),
-          ),
-          const MenuFabButton(),
-          _buildNavItem(
-            context,
-            icon: Icons.calendar_today,
-            isSelected: selectedIndex == 2,
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, AppRoutes.event),
-          ),
-          _buildNavItem(
-            context,
-            icon: Icons.settings,
-            isSelected: selectedIndex == 3,
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, AppRoutes.setting),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(
-    BuildContext context, {
-    required IconData icon,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
+    return BottomNavigationBar(
+      currentIndex: selectedIndex,
       onTap: onTap,
-      child: Icon(
-        icon,
-        // ignore: deprecated_member_use
-        color: isSelected ? Colors.white : Colors.white.withOpacity(0.5),
-        size: 24,
-      ),
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: const Color(0xFF1A1A4B),
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.grey,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.event),
+          label: 'Events',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.message),
+          label: 'Complaints',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ],
     );
   }
 }
