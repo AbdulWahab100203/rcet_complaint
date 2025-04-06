@@ -49,11 +49,11 @@ class AppRoutes {
         );
       case dashboard:
         return MaterialPageRoute(
-          builder: (_) => DashboardScreen(),
+          builder: (_) => const DashboardScreen(),
         );
       case setting:
         return MaterialPageRoute(
-          builder: (_) => SettingScreen(),
+          builder: (_) => const SettingScreen(),
         );
       case forget:
         return MaterialPageRoute(

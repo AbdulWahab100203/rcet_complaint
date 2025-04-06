@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
+import '../../routes/app_routes.dart';
 
 class Complaint {
   final String title;
@@ -18,7 +19,7 @@ class Complaint {
 }
 
 class DashboardScreen extends StatefulWidget {
-  DashboardScreen({super.key});
+  const DashboardScreen({super.key});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -130,13 +131,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 case 0: // Home
                   break;
                 case 1: // Events
-                  Navigator.pushNamed(context, '/events');
+                  Navigator.pushReplacementNamed(context, AppRoutes.event);
                   break;
                 case 2: // Complaints
-                  Navigator.pushNamed(context, '/complaints');
+                  Navigator.pushReplacementNamed(
+                      context, AppRoutes.complaintbox);
                   break;
                 case 3: // Profile
-                  Navigator.pushNamed(context, '/profile');
+                  Navigator.pushReplacementNamed(context, AppRoutes.setting);
                   break;
               }
             },

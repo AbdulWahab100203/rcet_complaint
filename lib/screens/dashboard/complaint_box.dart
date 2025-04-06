@@ -12,7 +12,7 @@ class ComplaintScreen extends StatefulWidget {
 }
 
 class _ComplaintScreenState extends State<ComplaintScreen> {
-  int _selectedIndex = 1;  // Complaints tab is selected
+  int _selectedIndex = 1; // Complaints tab is selected
 
   @override
   Widget build(BuildContext context) {
@@ -112,15 +112,15 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           // Handle navigation based on index
           switch (index) {
             case 0: // Home
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
               break;
             case 1: // Events
-              Navigator.pushNamed(context, '/events');
+              Navigator.pushReplacementNamed(context, AppRoutes.event);
               break;
             case 2: // Complaints
-              break;  // Already on complaints
+              break; // Already on complaints
             case 3: // Profile
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }
         },

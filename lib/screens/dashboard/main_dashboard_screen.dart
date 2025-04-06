@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../../widgets/tab_button.dart';
-import '../../widgets/complaint_card.dart';
 import '../../widgets/dashboard_card.dart';
+import '../../routes/app_routes.dart';
 
 class ComplaintScreenMain extends StatefulWidget {
-  ComplaintScreenMain({super.key});
+  const ComplaintScreenMain({super.key});
 
   @override
   State<ComplaintScreenMain> createState() => _ComplaintScreenMainState();
@@ -110,13 +109,13 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
             case 0: // Home
               break;
             case 1: // Events
-              Navigator.pushNamed(context, '/events');
+              Navigator.pushReplacementNamed(context, AppRoutes.event);
               break;
             case 2: // Complaints
-              Navigator.pushNamed(context, '/complaints');
+              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
               break;
             case 3: // Profile
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }
         },

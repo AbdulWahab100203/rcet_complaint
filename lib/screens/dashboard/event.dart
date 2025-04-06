@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:rcet_complaint/routes/app_routes.dart';
 import '../../widgets/event_card.dart';
 import '../../widgets/date_selector.dart';
 import '../../widgets/custom_bottom_bar.dart';
 
 class EventScheduleScreen extends StatefulWidget {
-  EventScheduleScreen({super.key});
+  const EventScheduleScreen({super.key});
 
   @override
   State<EventScheduleScreen> createState() => _EventScheduleScreenState();
 }
 
 class _EventScheduleScreenState extends State<EventScheduleScreen> {
-  int _selectedIndex = 1;  // Events tab is selected
+  int _selectedIndex = 1; // Events tab is selected
   final List<Map<String, dynamic>> events = [
     {
       "id": 1,
@@ -76,15 +77,15 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
           // Handle navigation based on index
           switch (index) {
             case 0: // Home
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
               break;
             case 1: // Events
-              break;  // Already on events
+              break; // Already on events
             case 2: // Complaints
-              Navigator.pushNamed(context, '/complaints');
+              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
               break;
             case 3: // Profile
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }
         },

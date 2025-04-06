@@ -10,7 +10,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  int _selectedIndex = 3;  // Profile/Settings tab is selected
+  int _selectedIndex = 3; // Profile/Settings tab is selected
 
   @override
   Widget build(BuildContext context) {
@@ -179,16 +179,19 @@ class _SettingScreenState extends State<SettingScreen> {
                 // Handle navigation based on index
                 switch (index) {
                   case 0: // Home
-                    Navigator.pushNamed(context, '/home');
+
+                    Navigator.pushReplacementNamed(
+                        context, AppRoutes.mainDashboard);
                     break;
                   case 1: // Events
-                    Navigator.pushNamed(context, '/events');
+                    Navigator.pushReplacementNamed(context, AppRoutes.event);
                     break;
                   case 2: // Complaints
-                    Navigator.pushNamed(context, '/complaints');
+                    Navigator.pushReplacementNamed(
+                        context, AppRoutes.complaintbox);
                     break;
                   case 3: // Profile
-                    break;  // Already on profile/settings
+                    break; // Already on profile/settings
                 }
               },
             ),
