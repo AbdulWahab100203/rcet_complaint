@@ -118,8 +118,11 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
               Navigator.pushReplacementNamed(context, AppRoutes.event);
               break;
             case 2: // Complaints
+              Navigator.pushNamed(context, AppRoutes.addComplaintBox);
               break; // Already on complaints
-            case 3: // Profile
+            case 3: // Complaints
+              break; // Already on complaints
+            case 4: // Profile
               Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }

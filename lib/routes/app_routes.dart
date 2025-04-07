@@ -3,13 +3,14 @@ import '../screens/auth/welcome_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/signup_screen.dart';
 import '../screens/auth/signup_form_screen.dart';
-import '../screens/dashboard/dashboard_screen.dart';
+// import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/auth/forget_screen.dart';
 import '../screens/dashboard/setting_screen.dart';
 import '../screens/dashboard/complaint_box.dart';
 import '../screens/dashboard/event.dart';
 import '../screens/dashboard/main_dashboard_screen.dart';
 import '../screens/dashboard/edit_profile.dart';
+import '../screens/dashboard/add_complaint_box.dart';
 
 class AppRoutes {
   static const String welcome = '/';
@@ -25,6 +26,7 @@ class AppRoutes {
   static const String event = '/EventScheduleScreen';
   static const String mainDashboard = '/ComplaintScreenMain';
   static const String editProfile = '/edit-profile';
+  static const String addComplaintBox = '/add-complaint-box';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -47,10 +49,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const SignUpFormScreen(),
         );
-      case dashboard:
-        return MaterialPageRoute(
-          builder: (_) => const DashboardScreen(),
-        );
+      // case dashboard:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const DashboardScreen(),
+      //   );
       case setting:
         return MaterialPageRoute(
           builder: (_) => const SettingScreen(),
@@ -72,9 +74,9 @@ class AppRoutes {
           builder: (_) => ComplaintScreenMain(),
         );
       case editProfile:
-        return MaterialPageRoute(
-          builder: (_) => EditProfileScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+      case addComplaintBox:
+        return MaterialPageRoute(builder: (_) => const AddComplaintBox());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
