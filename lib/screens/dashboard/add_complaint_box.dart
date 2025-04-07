@@ -12,7 +12,7 @@ class AddComplaintBox extends StatefulWidget {
 class _AddComplaintBoxState extends State<AddComplaintBox> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  int _maxUsers = 7;
+  int _maxUsers = 1;
 
   @override
   void dispose() {

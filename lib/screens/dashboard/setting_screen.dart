@@ -10,7 +10,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  int _selectedIndex = 3; // Profile/Settings tab is selected
+  int _selectedIndex = 4; // Profile/Settings tab is selected
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +23,16 @@ class _SettingScreenState extends State<SettingScreen> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   const Text(
                     'Settings',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   Center(
                     child: Column(
                       children: [
@@ -41,14 +41,14 @@ class _SettingScreenState extends State<SettingScreen> {
                           backgroundColor: Colors.grey[200],
                           child: const Icon(
                             Icons.person,
-                            size: 50,
+                            size: 40,
                           ),
                         ),
                         const SizedBox(height: 16),
                         const Text(
                           'Ali Hassan',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -56,7 +56,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         const Text(
                           'ali@gmail.com',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.grey,
                           ),
                         ),
@@ -68,15 +68,15 @@ class _SettingScreenState extends State<SettingScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   const Text(
                     'General',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -88,8 +88,11 @@ class _SettingScreenState extends State<SettingScreen> {
                           leading: const Icon(Icons.lock_outline),
                           title: const Text('Change Password'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 16),
-                          onTap: () {},
+                              const Icon(Icons.arrow_forward_ios, size: 14),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, AppRoutes.changePassword);
+                          },
                         ),
                         const Divider(height: 1),
                         ListTile(
@@ -103,15 +106,15 @@ class _SettingScreenState extends State<SettingScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 15),
                   const Text(
                     'Help & Legal',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -123,29 +126,36 @@ class _SettingScreenState extends State<SettingScreen> {
                           leading: const Icon(Icons.help_outline),
                           title: const Text('Help'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 16),
-                          onTap: () {},
+                              const Icon(Icons.arrow_forward_ios, size: 14),
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRoutes.help);
+                          },
                         ),
                         const Divider(height: 1),
                         ListTile(
                           leading: const Icon(Icons.policy_outlined),
                           title: const Text('Policies'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 16),
-                          onTap: () {},
+                              const Icon(Icons.arrow_forward_ios, size: 14),
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRoutes.policies);
+                          },
                         ),
                         const Divider(height: 1),
                         ListTile(
                           leading: const Icon(Icons.report_problem_outlined),
                           title: const Text('Report Problem'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 16),
-                          onTap: () {},
+                              const Icon(Icons.arrow_forward_ios, size: 14),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, AppRoutes.reportProblem);
+                          },
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -166,7 +176,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 15),
                 ],
               ),
             ),
@@ -188,9 +198,13 @@ class _SettingScreenState extends State<SettingScreen> {
                     break;
                   case 2: // Complaints
                     Navigator.pushReplacementNamed(
+                        context, AppRoutes.addComplaintBox);
+                    break;
+                  case 3: // Complaints
+                    Navigator.pushReplacementNamed(
                         context, AppRoutes.complaintbox);
                     break;
-                  case 3: // Profile
+                  case 4: // Profile
                     break; // Already on profile/settings
                 }
               },

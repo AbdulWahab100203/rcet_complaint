@@ -81,10 +81,14 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
               break;
             case 1: // Events
               break; // Already on events
-            case 2: // Complaints
+            case 2: // Events
+              Navigator.pushReplacementNamed(
+                  context, AppRoutes.addComplaintBox);
+              break; // Already on events
+            case 3: // Complaints
               Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
               break;
-            case 3: // Profile
+            case 4: // Profile
               Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }

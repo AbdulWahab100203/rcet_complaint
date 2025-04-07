@@ -11,6 +11,10 @@ import '../screens/dashboard/event.dart';
 import '../screens/dashboard/main_dashboard_screen.dart';
 import '../screens/dashboard/edit_profile.dart';
 import '../screens/dashboard/add_complaint_box.dart';
+import '../screens/dashboard/help.dart';
+import '../screens/dashboard/policies.dart';
+import '../screens/dashboard/report_problem.dart';
+import '../screens/dashboard/change_password.dart';
 
 class AppRoutes {
   static const String welcome = '/';
@@ -27,6 +31,10 @@ class AppRoutes {
   static const String mainDashboard = '/ComplaintScreenMain';
   static const String editProfile = '/edit-profile';
   static const String addComplaintBox = '/add-complaint-box';
+  static const String help = '/help';
+  static const String policies = '/policies';
+  static const String reportProblem = '/report-problem';
+  static const String changePassword = '/change-password';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -72,6 +80,22 @@ class AppRoutes {
       case mainDashboard:
         return MaterialPageRoute(
           builder: (_) => ComplaintScreenMain(),
+        );
+      case help:
+        return MaterialPageRoute(
+          builder: (_) => const HelpScreen(),
+        );
+      case policies:
+        return MaterialPageRoute(
+          builder: (_) => const PoliciesScreen(),
+        );
+      case changePassword:
+        return MaterialPageRoute(
+          builder: (_) => const ChangePassword(),
+        );
+      case reportProblem:
+        return MaterialPageRoute(
+          builder: (_) => const ReportProblemScreen(),
         );
       case editProfile:
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());

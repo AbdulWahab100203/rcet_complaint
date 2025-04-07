@@ -12,7 +12,7 @@ class ComplaintScreen extends StatefulWidget {
 }
 
 class _ComplaintScreenState extends State<ComplaintScreen> {
-  int _selectedIndex = 1; // Complaints tab is selected
+  int _selectedIndex = 3; // Complaints tab is selected
 
   @override
   Widget build(BuildContext context) {
