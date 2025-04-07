@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rcet_complaint/screens/dashboard/ComplaintDetailScreen.dart';
 
 class ComplaintCard extends StatelessWidget {
   final String id;
@@ -30,9 +31,29 @@ class ComplaintCard extends StatelessWidget {
           title,
           style: const TextStyle(fontSize: 14),
         ),
-        trailing: const Text(
-          "View",
-          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+        trailing: GestureDetector(
+          onTap: () {
+            // Debugging line to check if onTap is triggered
+            print("Navigating to Complaint Detail: $id, $title");
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ComplaintDetailScreen(
+                  id: id,
+                  title: title,
+                ),
+              ),
+            );
+          },
+          child: const Text(
+            "View",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
+            ),
+          ),
         ),
       ),
     );

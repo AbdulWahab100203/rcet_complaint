@@ -1,138 +1,136 @@
-// import 'package:flutter/material.dart';
-// import '../../widgets/custom_bottom_bar.dart';
-// import '../../widgets/dashboard_card.dart';
-// import '../../routes/app_routes.dart';
+import 'package:flutter/material.dart';
+import '../../widgets/custom_bottom_bar.dart';
+import '../../widgets/dashboard_card.dart';
+import '../../routes/app_routes.dart';
+import 'resolved_complaints.dart'; // ✅ your component
+import 'unresolved_complaints.dart'; // ✅ your component
 
-// class ComplaintScreenMain extends StatefulWidget {
-//   const ComplaintScreenMain({super.key});
-
-//   @override
-//   State<ComplaintScreenMain> createState() => _ComplaintScreenMainState();
-// }
-
-// class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
-//   int _selectedIndex = 0;
-//   final List<Map<String, dynamic>> complaints = [
-//     {'id': '1', 'title': 'Complaint regarding boys hostels'},
-//     {'id': '2', 'title': 'Complaint regarding repair'},
-//     {'id': '3', 'title': 'Complaint regarding electricity'},
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Column(
-//           children: [
-//             const SizedBox(height: 20),
-
-//             // Logo at the top
-//             Center(
-//               child: Image.asset(
-//                 'assets/images/logo.png',
-//                 height: 80,
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return const Icon(Icons.error, size: 50, color: Colors.red);
-//                 },
-//               ),
-//             ),
-
-//             const SizedBox(height: 15),
-
-//             // Dashboard Cards Row
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 10),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                 children: [
-//                   DashboardCard(title: "Complaint Box", count: "3"),
-//                   DashboardCard(title: "Complaints", count: "99"),
-//                   DashboardCard(title: "Resolved Complaints", count: "56"),
-//                 ],
-//               ),
-//             ),
-
-//             const SizedBox(height: 20),
-
-//             // Tab Bar Section
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 15),
-//               child: Container(
-//                 padding: const EdgeInsets.all(5),
-//                 decoration: BoxDecoration(
-//                   color: const Color(0xFF1A1A4B),
-//                   borderRadius: BorderRadius.circular(30),
-//                 ),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                   // children: [
-//                   //   TabButton(title: "Solved Complaints", isActive: true),
-//                   //   TabButton(title: "Unresolved Complaints", isActive: false),
-//                   // ],
-//                 ),
-//               ),
-//             ),
-
-//             const SizedBox(height: 10),
-
-//             // Complaint List
-//             Expanded(
-//               child: complaints.isNotEmpty
-//                   ? ListView.builder(
-//                       itemCount: complaints.length,
-//                       itemBuilder: (context, index) {
-//                         // return ComplaintCard(
-//                         //   id: complaints[index]['id'].toString(),
-//                         //   title: complaints[index]['title'],
-//                         // );
-//                       },
-//                     )
-//                   : const Center(
-//                       child: Text(
-//                         "No Complaints Available",
-//                         style: TextStyle(
-//                             fontSize: 16, fontWeight: FontWeight.bold),
-//                       ),
-//                     ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       bottomNavigationBar: CustomBottomBar(
-//         selectedIndex: _selectedIndex,
-//         onTap: (index) {
-//           setState(() {
-//             _selectedIndex = index;
-//           });
-//           // Handle navigation based on index
-//           switch (index) {
-//             case 0: // Home
-//               break;
-//             case 1: // Events
-//               Navigator.pushReplacementNamed(context, AppRoutes.event);
-//               break;
-//             case 2: // Complaints
-//               Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
-//               break;
-//             case 3: // Profile
-//               Navigator.pushReplacementNamed(context, AppRoutes.setting);
-//               break;
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
-import "package:flutter/material.dart";
-
-class ComplaintScreenMain extends StatelessWidget {
+class ComplaintScreenMain extends StatefulWidget {
   const ComplaintScreenMain({super.key});
+
+  @override
+  State<ComplaintScreenMain> createState() => _ComplaintScreenMainState();
+}
+
+class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
+  int _selectedIndex = 0;
+  bool showResolved = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("home screen"),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+
+            // Logo
+            Center(
+              child: Image.asset(
+                'images/logo.png',
+                height: 80,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.error, size: 50, color: Colors.red),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            // Dashboard
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  DashboardCard(title: "Complaint Box", count: "3"),
+                  DashboardCard(title: "Complaints", count: "99"),
+                  DashboardCard(title: "Resolved", count: "56"),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Toggle Buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1A1A4B),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    toggleButton("Resolved", showResolved),
+                    toggleButton("Unresolved", !showResolved),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Complaint List from Components
+            Expanded(
+              child: showResolved
+                  ? const ResolvedComplaints()
+                  : UnresolvedComplaints(),
+            ),
+          ],
+        ),
+      ),
+
+      // Bottom Navigation Bar
+      bottomNavigationBar: CustomBottomBar(
+        selectedIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          switch (index) {
+            case 1:
+              Navigator.pushReplacementNamed(context, AppRoutes.event);
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, AppRoutes.setting);
+              break;
+          }
+        },
+      ),
+    );
+  }
+
+  // Toggle Button Widget
+  Widget toggleButton(String title, bool isActive) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            showResolved = (title == "Resolved");
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: isActive ? Colors.white : Colors.transparent,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: isActive ? Colors.black : Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
