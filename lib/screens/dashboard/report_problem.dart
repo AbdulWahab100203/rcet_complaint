@@ -2,18 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rcet_complaint/routes/app_routes.dart';
 
 class ReportProblemScreen extends StatefulWidget {
-  const ReportProblemScreen({super.key});
-
   @override
   State<ReportProblemScreen> createState() => _ReportProblemScreenState();
 }
 
 class _ReportProblemScreenState extends State<ReportProblemScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
   String _selectedCategory = 'Technical';
-
   final List<String> _categories = [
     'Technical',
     'UI/UX',
@@ -32,82 +26,65 @@ class _ReportProblemScreenState extends State<ReportProblemScreen> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSectionTitle('Problem Details'),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Title',
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a brief title for the problem',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
-                  }
-                  return null;
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle('Problem Details'),
+            const SizedBox(height: 16),
+            const TextField(
+              decoration: InputDecoration(
+                labelText: 'Title',
+                border: OutlineInputBorder(),
+                hintText: 'Enter a brief title for the problem',
+              ),
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: _selectedCategory,
+              decoration: const InputDecoration(
+                labelText: 'Category',
+                border: OutlineInputBorder(),
+              ),
+              items: _categories.map((String category) {
+                return DropdownMenuItem(
+                  value: category,
+                  child: Text(category),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    _selectedCategory = newValue;
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+            const TextField(
+              decoration: InputDecoration(
+                labelText: 'Description',
+                border: OutlineInputBorder(),
+                hintText: 'Provide detailed information about the problem',
+              ),
+              maxLines: 5,
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.setting);
                 },
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedCategory,
-                decoration: const InputDecoration(
-                  labelText: 'Category',
-                  border: OutlineInputBorder(),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                items: _categories.map((String category) {
-                  return DropdownMenuItem(
-                    value: category,
-                    child: Text(category),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      _selectedCategory = newValue;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                  border: OutlineInputBorder(),
-                  hintText: 'Provide detailed information about the problem',
-                ),
-                maxLines: 5,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a description';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.setting);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: const Text(
-                    'Submit Report',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                child: const Text(
+                  'Submit Report',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

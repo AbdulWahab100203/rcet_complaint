@@ -5,7 +5,6 @@ import '../../widgets/primary_button.dart';
 import '../../routes/app_routes.dart';
 
 class ComplaintScreen extends StatefulWidget {
-  const ComplaintScreen({super.key});
 
   @override
   State<ComplaintScreen> createState() => _ComplaintScreenState();

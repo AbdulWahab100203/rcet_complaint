@@ -40,22 +40,19 @@ class AppRoutes {
     switch (settings.name) {
       case welcome:
         return MaterialPageRoute(
-          builder: (_) => const WelcomeScreen(),
+          builder: (_) => WelcomeScreen(),
         );
       case login:
         return MaterialPageRoute(
-          builder: (_) => LoginScreen(
-            emailController: TextEditingController(),
-            passwordController: TextEditingController(),
-          ),
+          builder: (_) => LoginScreen(),
         );
       case signup:
         return MaterialPageRoute(
-          builder: (_) => const SignUpScreen(),
+          builder: (_) => SignUpScreen(),
         );
       case signUpForm:
         return MaterialPageRoute(
-          builder: (_) => const SignUpFormScreen(),
+          builder: (_) => SignUpFormScreen(),
         );
       // case dashboard:
       //   return MaterialPageRoute(
@@ -63,15 +60,15 @@ class AppRoutes {
       //   );
       case setting:
         return MaterialPageRoute(
-          builder: (_) => const SettingScreen(),
+          builder: (_) => SettingScreen(),
         );
       case forget:
         return MaterialPageRoute(
-          builder: (_) => const ForgetScreen(),
+          builder: (_) => ForgetScreen(),
         );
       case complaintbox:
         return MaterialPageRoute(
-          builder: (_) => const ComplaintScreen(),
+          builder: (_) => ComplaintScreen(),
         );
       case event:
         return MaterialPageRoute(
@@ -83,24 +80,24 @@ class AppRoutes {
         );
       case help:
         return MaterialPageRoute(
-          builder: (_) => const HelpScreen(),
+          builder: (_) => HelpScreen(),
         );
       case policies:
         return MaterialPageRoute(
-          builder: (_) => const PoliciesScreen(),
+          builder: (_) => PoliciesScreen(),
         );
       case changePassword:
         return MaterialPageRoute(
-          builder: (_) => const ChangePassword(),
+          builder: (_) => ChangePassword(),
         );
       case reportProblem:
         return MaterialPageRoute(
-          builder: (_) => const ReportProblemScreen(),
+          builder: (_) => ReportProblemScreen(),
         );
       case editProfile:
-        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+        return MaterialPageRoute(builder: (_) => EditProfileScreen());
       case addComplaintBox:
-        return MaterialPageRoute(builder: (_) => const AddComplaintBox());
+        return MaterialPageRoute(builder: (_) => AddComplaintBox());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

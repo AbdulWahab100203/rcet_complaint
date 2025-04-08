@@ -4,21 +4,11 @@ import '../../widgets/primary_button.dart';
 import '../../widgets/text_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final VoidCallback? onLogin;
-  final VoidCallback? onForgotPassword;
-
-  const LoginScreen({
-    super.key,
-    required this.emailController,
-    required this.passwordController,
-    this.onLogin,
-    this.onForgotPassword,
-  });
-
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -65,11 +55,10 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 24),
               PrimaryButton(
                 text: 'Login',
-                onPressed: onLogin ??
-                    () {
-                      Navigator.pushReplacementNamed(
-                          context, AppRoutes.mainDashboard);
-                    },
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, AppRoutes.mainDashboard);
+                },
               ),
               const SizedBox(height: 24),
               Row(

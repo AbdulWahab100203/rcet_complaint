@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rcet_complaint/widgets/dashboard_card.dart';
 
 class ResolvedComplaints extends StatelessWidget {
-  const ResolvedComplaints({super.key});
+
 
   @override
   Widget build(BuildContext context) {

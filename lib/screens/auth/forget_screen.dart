@@ -4,7 +4,6 @@ import '../../widgets/primary_button.dart';
 import '../../widgets/text_input_field.dart';
 
 class ForgetScreen extends StatelessWidget {
-  const ForgetScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

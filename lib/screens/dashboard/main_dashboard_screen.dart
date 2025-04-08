@@ -6,8 +6,6 @@ import 'resolved_complaints.dart';
 import 'unresolved_complaints.dart';
 
 class ComplaintScreenMain extends StatefulWidget {
-  const ComplaintScreenMain({super.key});
-
   @override
   State<ComplaintScreenMain> createState() => _ComplaintScreenMainState();
 }
@@ -62,9 +60,8 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: showResolved
-                  ? const ResolvedComplaints()
-                  : UnresolvedComplaints(),
+              child:
+                  showResolved ? ResolvedComplaints() : UnresolvedComplaints(),
             ),
           ],
         ),

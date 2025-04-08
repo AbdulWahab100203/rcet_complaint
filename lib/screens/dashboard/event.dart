@@ -5,7 +5,6 @@ import '../../widgets/date_selector.dart';
 import '../../widgets/custom_bottom_bar.dart';
 
 class EventScheduleScreen extends StatefulWidget {
-  const EventScheduleScreen({super.key});
 
   @override
   State<EventScheduleScreen> createState() => _EventScheduleScreenState();
