@@ -30,10 +30,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
                     const Icon(Icons.error, size: 50, color: Colors.red),
               ),
             ),
-
             const SizedBox(height: 15),
-
-            // Dashboard
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
@@ -63,10 +60,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
                 ),
               ),
             ),
-
             const SizedBox(height: 10),
-
-            // Complaint List from Components
             Expanded(
               child: showResolved
                   ? const ResolvedComplaints()
@@ -75,8 +69,6 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
           ],
         ),
       ),
-
-      // Bottom Navigation Bar
       bottomNavigationBar: CustomBottomBar(
         selectedIndex: _selectedIndex,
         onTap: (index) {
@@ -84,13 +76,19 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
             _selectedIndex = index;
           });
           switch (index) {
+            case 0:
+              break;
             case 1:
               Navigator.pushReplacementNamed(context, AppRoutes.event);
               break;
             case 2:
-              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
+              Navigator.pushReplacementNamed(
+                  context, AppRoutes.addComplaintBox);
               break;
             case 3:
+              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
+              break;
+            case 4:
               Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }

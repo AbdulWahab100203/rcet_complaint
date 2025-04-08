@@ -27,9 +27,9 @@ class EditProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: const [
-              ProfilePicture(), // Using custom Profile Picture widget
+              ProfilePicture(),
               SizedBox(height: 25),
-              CustomTextField(label: "Username", hintText: "Faiqa Farooq"),
+              CustomTextField(label: "Username", hintText: "Asfand"),
               CustomTextField(
                   label: "Password", hintText: "**********", isPassword: true),
               CustomTextField(label: "Phone", hintText: "+92-300 268 6600"),

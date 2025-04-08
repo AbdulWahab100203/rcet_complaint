@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rcet_complaint/routes/app_routes.dart';
 
 class ReportProblemScreen extends StatefulWidget {
   const ReportProblemScreen({super.key});
@@ -12,7 +13,6 @@ class _ReportProblemScreenState extends State<ReportProblemScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   String _selectedCategory = 'Technical';
-  bool _isUrgent = false;
 
   final List<String> _categories = [
     'Technical',
@@ -21,13 +21,6 @@ class _ReportProblemScreenState extends State<ReportProblemScreen> {
     'Bug Report',
     'Other',
   ];
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,21 +90,13 @@ class _ReportProblemScreenState extends State<ReportProblemScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
-              SwitchListTile(
-                title: const Text('Mark as Urgent'),
-                value: _isUrgent,
-                onChanged: (bool value) {
-                  setState(() {
-                    _isUrgent = value;
-                  });
-                },
-              ),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.setting);
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),

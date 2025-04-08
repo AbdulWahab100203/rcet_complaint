@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/primary_button.dart';
+import '../../widgets/custom_bottom_bar.dart';
 
 class AddComplaintBox extends StatefulWidget {
   const AddComplaintBox({super.key});
@@ -13,13 +14,7 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   int _maxUsers = 1;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
+  int _selectedIndex = 2; // Events tab is selected
 
   @override
   Widget build(BuildContext context) {
@@ -31,22 +26,22 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
               const Text(
                 'Add new\nComplaint Box',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 25),
               Container(
-                width: 120,
-                height: 120,
+                width: 80,
+                height: 80,
                 decoration: BoxDecoration(
                   color: Colors.black,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Stack(
                   children: [
@@ -56,7 +51,7 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                         backgroundColor: Colors.lightBlue[200],
                         child: const Icon(
                           Icons.person,
-                          size: 40,
+                          size: 30,
                           color: Colors.white,
                         ),
                       ),
@@ -76,7 +71,7 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 25),
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
@@ -86,10 +81,10 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               TextField(
                 controller: _descriptionController,
-                maxLines: 4,
+                maxLines: 3,
                 decoration: InputDecoration(
                   labelText: 'Description',
                   alignLabelWithHint: true,
@@ -98,12 +93,12 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 25),
               const Text(
                 'Maximum Users',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 10),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 7),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -126,7 +121,7 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                     child: Text(
                       '$_maxUsers',
                       style: const TextStyle(
-                        fontSize: 32,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -145,7 +140,7 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               PrimaryButton(
                 text: 'Create Complaint Box',
                 onPressed: () {
@@ -156,6 +151,32 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: CustomBottomBar(
+        selectedIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          // Handle navigation based on index
+          switch (index) {
+            case 0: // Home
+              Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
+              break;
+            case 1: // Events
+              break; // Already on events
+            case 2: // Events
+              Navigator.pushReplacementNamed(
+                  context, AppRoutes.addComplaintBox);
+              break; // Already on events
+            case 3: // Complaints
+              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
+              break;
+            case 4: // Profile
+              Navigator.pushReplacementNamed(context, AppRoutes.setting);
+              break;
+          }
+        },
       ),
     );
   }

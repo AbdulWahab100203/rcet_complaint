@@ -12,7 +12,7 @@ class ComplaintScreen extends StatefulWidget {
 }
 
 class _ComplaintScreenState extends State<ComplaintScreen> {
-  int _selectedIndex = 3; // Complaints tab is selected
+  int _selectedIndex = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
             child: PrimaryButton(
               text: 'Create Complaint Box',
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.login);
+                Navigator.pushNamed(context, AppRoutes.addComplaintBox);
               },
               backgroundColor: Colors.white,
               textColor: Colors.black,
@@ -109,20 +109,20 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           setState(() {
             _selectedIndex = index;
           });
-          // Handle navigation based on index
           switch (index) {
-            case 0: // Home
+            case 0:
               Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
               break;
-            case 1: // Events
+            case 1:
               Navigator.pushReplacementNamed(context, AppRoutes.event);
               break;
-            case 2: // Complaints
+            case 2:
               Navigator.pushNamed(context, AppRoutes.addComplaintBox);
-              break; // Already on complaints
-            case 3: // Complaints
-              break; // Already on complaints
-            case 4: // Profile
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, AppRoutes.complaintbox);
+              break;
+            case 4:
               Navigator.pushReplacementNamed(context, AppRoutes.setting);
               break;
           }
