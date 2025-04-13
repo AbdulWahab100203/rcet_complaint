@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rcet_complaint/widgets/app_drawer.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/complaint_box.dart';
 import '../../widgets/primary_button.dart';
 import '../../routes/app_routes.dart';
 
 class ComplaintScreen extends StatefulWidget {
-
   @override
   State<ComplaintScreen> createState() => _ComplaintScreenState();
 }
@@ -16,16 +16,23 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+        centerTitle: true, // ✅ This centers the title
+        title: const Text(
+          'Complaint Box',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      drawer: const AppDrawer(),
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 16),
-            child: Text(
-              'Complaint Box',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
           Container(
             margin: const EdgeInsets.only(top: 25),
             child: PrimaryButton(

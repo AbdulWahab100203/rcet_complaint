@@ -7,6 +7,7 @@ class AddComplaintBox extends StatefulWidget {
   @override
   State<AddComplaintBox> createState() => _AddComplaintBoxState();
 }
+
 class _AddComplaintBoxState extends State<AddComplaintBox> {
   String name = '';
   String description = '';

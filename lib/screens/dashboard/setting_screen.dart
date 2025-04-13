@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rcet_complaint/widgets/app_drawer.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/custom_bottom_bar.dart';
 
@@ -15,6 +16,20 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+        centerTitle: true, // ✅ This centers the title
+        title: const Text(
+          'Settings',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      drawer: const AppDrawer(),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -23,15 +38,6 @@ class _SettingScreenState extends State<SettingScreen> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 children: [
-                  const SizedBox(height: 15),
-                  const Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
                   const SizedBox(height: 15),
                   Center(
                     child: Column(

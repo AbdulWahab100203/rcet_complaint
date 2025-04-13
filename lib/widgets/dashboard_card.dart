@@ -23,7 +23,8 @@ class DashboardCard extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              Text(title, textAlign: TextAlign.center, 
+              Text(title,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(height: 5),
               Text(count, style: const TextStyle(fontSize: 18)),
@@ -49,9 +50,7 @@ class TabButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Handle tab switching logic
-      },
+      onTap: () {},
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
@@ -88,7 +87,8 @@ class ComplaintCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: ListTile(
-        leading: Text(id, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        leading: Text(id,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         title: Text(title),
         trailing: TextButton(
           onPressed: () {
@@ -143,8 +143,12 @@ class ComplaintScreenMain extends StatelessWidget {
                 ),
                 child: Row(
                   children: const [
-                    Expanded(child: TabButton(title: "Solved Complaints", isActive: true)),
-                    Expanded(child: TabButton(title: "Unresolved Complaints", isActive: false)),
+                    Expanded(
+                        child: TabButton(
+                            title: "Solved Complaints", isActive: true)),
+                    Expanded(
+                        child: TabButton(
+                            title: "Unresolved Complaints", isActive: false)),
                   ],
                 ),
               ),
@@ -185,7 +189,8 @@ class ComplaintScreenMain extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle, size: 40), label: ""),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle, size: 40), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),
         ],

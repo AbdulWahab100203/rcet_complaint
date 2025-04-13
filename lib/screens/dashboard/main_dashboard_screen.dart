@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rcet_complaint/widgets/app_drawer.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/dashboard_card.dart';
 import '../../routes/app_routes.dart';
@@ -16,6 +17,12 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      drawer: const AppDrawer(),
       body: SafeArea(
         child: Column(
           children: [
