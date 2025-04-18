@@ -57,6 +57,13 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.people),
+            title: const Text('Employees'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, AppRoutes.employees);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
             onTap: () {

@@ -21,20 +21,28 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
+        centerTitle: true, // ✅ This centers the title
+        title: const Text(
+          'RCET Complaint Box',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       drawer: const AppDrawer(),
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            Center(
-              child: Image.asset(
-                'assets/images/logo.png',
-                height: 80,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.error, size: 50, color: Colors.red),
-              ),
-            ),
+            // const SizedBox(height: 20),
+            // Center(
+            //   child: Image.asset(
+            //     'assets/images/logo.png',
+            //     height: 80,
+            //     errorBuilder: (context, error, stackTrace) =>
+            //         const Icon(Icons.error, size: 50, color: Colors.red),
+            //   ),
+            // ),
             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -59,8 +67,9 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    toggleButton("Resolved", showResolved),
                     toggleButton("Unresolved", !showResolved),
+                    toggleButton("Assigned", !showResolved),
+                    toggleButton("Resolved", showResolved),
                   ],
                 ),
               ),

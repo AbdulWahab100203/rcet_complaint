@@ -16,7 +16,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _showNewPassword = false;
   bool _showConfirmPassword = false;
 
-  @override
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'This field is required';

@@ -32,8 +32,8 @@ class CustomBottomBar extends StatelessWidget {
           icon: Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Container(
-              width: 50,
-              height: 50,
+              width: 35,
+              height: 35,
               decoration: const BoxDecoration(
                 color: Colors.amber,
                 shape: BoxShape.circle,
@@ -42,7 +42,7 @@ class CustomBottomBar extends StatelessWidget {
                 child: Icon(
                   Icons.add,
                   color: Colors.white,
-                  size: 24,
+                  size: 17,
                 ),
               ),
             ),

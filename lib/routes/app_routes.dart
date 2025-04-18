@@ -15,6 +15,7 @@ import '../screens/dashboard/help.dart';
 import '../screens/dashboard/policies.dart';
 import '../screens/dashboard/report_problem.dart';
 import '../screens/dashboard/change_password.dart';
+import '../screens/dashboard/employees_screen.dart';
 
 class AppRoutes {
   static const String welcome = '/';
@@ -35,6 +36,7 @@ class AppRoutes {
   static const String policies = '/policies';
   static const String reportProblem = '/report-problem';
   static const String changePassword = '/change-password';
+  static const String employees = '/employees';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -98,6 +100,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => EditProfileScreen());
       case addComplaintBox:
         return MaterialPageRoute(builder: (_) => AddComplaintBox());
+      case employees:
+        return MaterialPageRoute(builder: (_) => const EmployeesScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
