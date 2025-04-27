@@ -38,6 +38,17 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
         child: Column(
           children: [
             const SizedBox(height: 5),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: const [
+            //       DashboardCard(title: "ComplaintBox", count: "3"),
+            //       DashboardCard(title: "Complaints", count: "99"),
+            //       DashboardCard(title: "Resolved", count: "56"),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -97,7 +108,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
       case "unassigned":
         return UnassignedComplaints();
       case "assigned":
-        return AssignedComplaints();
+        return AssignedComplaintsScreen();
       case "resolved":
         return ResolvedComplaints();
       default:
@@ -105,6 +116,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
     }
   }
 
+  // Toggle Button Widget
   Widget toggleButton(String title, bool isActive) {
     return Expanded(
       child: GestureDetector(

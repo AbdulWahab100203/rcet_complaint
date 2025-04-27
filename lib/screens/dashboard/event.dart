@@ -38,7 +38,7 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true, // ✅ This centers the title
+        centerTitle: true, // This centers the title
         title: const Text(
           'Event Schedule',
           style: TextStyle(
@@ -85,7 +85,7 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
 
           switch (index) {
             case 0:
-              Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
+              Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
               break;
             case 1:
               break; // Already on events
