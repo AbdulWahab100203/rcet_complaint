@@ -49,7 +49,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
               padding: const EdgeInsets.symmetric(vertical: 16),
               children: const [
                 ComplaintBox(
-                  title: "CSE Department",
+                  title: "Computer Science Department",
                   total: 114,
                   solved: 90,
                   remaining: 24,
@@ -57,7 +57,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                   progressColor: Colors.orange,
                 ),
                 ComplaintBox(
-                  title: "Mech Department",
+                  title: "Mechanical Department",
                   total: 56,
                   solved: 50,
                   remaining: 6,
