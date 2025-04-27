@@ -4,7 +4,8 @@ import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/dashboard_card.dart';
 import '../../routes/app_routes.dart';
 import 'resolved_complaints.dart';
-import 'unresolved_complaints.dart';
+import 'unassigned_complaints.dart';
+import 'assigned_complaints.dart';
 
 class ComplaintScreenMain extends StatefulWidget {
   @override
@@ -13,7 +14,9 @@ class ComplaintScreenMain extends StatefulWidget {
 
 class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
   int _selectedIndex = 0;
-  bool showResolved = false;
+  String selectedTab =
+      "unassigned"; // Can be "unassigned", "assigned", or "resolved"
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true, // ✅ This centers the title
+        centerTitle: true,
         title: const Text(
           'RCET Complaint Box',
           style: TextStyle(
@@ -34,27 +37,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
       body: SafeArea(
         child: Column(
           children: [
-            // const SizedBox(height: 20),
-            // Center(
-            //   child: Image.asset(
-            //     'assets/images/logo.png',
-            //     height: 80,
-            //     errorBuilder: (context, error, stackTrace) =>
-            //         const Icon(Icons.error, size: 50, color: Colors.red),
-            //   ),
-            // ),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  DashboardCard(title: "ComplaintBox", count: "3"),
-                  DashboardCard(title: "Complaints", count: "99"),
-                  DashboardCard(title: "Resolved", count: "56"),
-                ],
-              ),
-            ),
+            const SizedBox(height: 5),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -67,17 +50,16 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    toggleButton("Unresolved", !showResolved),
-                    toggleButton("Assigned", !showResolved),
-                    toggleButton("Resolved", showResolved),
+                    toggleButton("Unassigned", selectedTab == "unassigned"),
+                    toggleButton("Assigned", selectedTab == "assigned"),
+                    toggleButton("Resolved", selectedTab == "resolved"),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 10),
             Expanded(
-              child:
-                  showResolved ? ResolvedComplaints() : UnresolvedComplaints(),
+              child: _buildSelectedView(),
             ),
           ],
         ),
@@ -110,13 +92,25 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
     );
   }
 
-  // Toggle Button Widget
+  Widget _buildSelectedView() {
+    switch (selectedTab) {
+      case "unassigned":
+        return UnassignedComplaints();
+      case "assigned":
+        return AssignedComplaints();
+      case "resolved":
+        return ResolvedComplaints();
+      default:
+        return UnassignedComplaints();
+    }
+  }
+
   Widget toggleButton(String title, bool isActive) {
     return Expanded(
       child: GestureDetector(
         onTap: () {
           setState(() {
-            showResolved = (title == "Resolved");
+            selectedTab = title.toLowerCase();
           });
         },
         child: Container(
