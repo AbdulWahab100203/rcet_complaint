@@ -49,32 +49,33 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 20),
-              const Text('Maximum Users'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    onPressed: () {
-                      if (_maxUsers > 1) {
-                        setState(() => _maxUsers--);
-                      }
-                    },
-                  ),
-                  Text('$_maxUsers', style: const TextStyle(fontSize: 20)),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    onPressed: () => setState(() => _maxUsers++),
-                  ),
-                ],
-              ),
+              // const SizedBox(height: 20),
+              // const Text('Maximum Users'),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     IconButton(
+              //       icon: const Icon(Icons.remove),
+              //       onPressed: () {
+              //         if (_maxUsers > 1) {
+              //           setState(() => _maxUsers--);
+              //         }
+              //       },
+              //     ),
+              //     Text('$_maxUsers', style: const TextStyle(fontSize: 20)),
+              //     IconButton(
+              //       icon: const Icon(Icons.add),
+              //       onPressed: () => setState(() => _maxUsers++),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 20),
               PrimaryButton(
                 text: 'Create',
                 onPressed: () {
                   // You can use `name`, `description`, and `_maxUsers` here
-                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(
+                      context, AppRoutes.complaintbox);
                 },
               ),
             ],
@@ -88,6 +89,9 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
           switch (index) {
             case 0:
               Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, AppRoutes.event);
               break;
             case 2:
               Navigator.pushReplacementNamed(

@@ -4,6 +4,7 @@ import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/complaint_box.dart';
 import '../../widgets/primary_button.dart';
 import '../../routes/app_routes.dart';
+import 'dart:math' as math;
 
 class ComplaintScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true, // ✅ This centers the title
+        centerTitle: true,
         title: const Text(
           'Complaint Box',
           style: TextStyle(
@@ -31,83 +32,128 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       ),
       drawer: const AppDrawer(),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 25),
-            child: PrimaryButton(
-              text: 'Create Complaint Box',
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.addComplaintBox);
-              },
-              backgroundColor: Colors.white,
-              textColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Column(
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: CustomPaint(
+                          painter: CircularArcPainter(
+                            colors: [
+                              Colors.tealAccent,
+                              Colors.orangeAccent,
+                              Colors.purpleAccent,
+                              Colors.grey.shade400,
+                            ],
+                            strokeWidth: 12,
+                          ),
+                        ),
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Text(
+                            '3',
+                            style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          Text(
+                            'Total 34 Complaints',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              children: const [
-                ComplaintBox(
-                  title: "Computer Science Department",
-                  total: 114,
-                  solved: 90,
-                  remaining: 24,
-                  icon: Icons.computer,
-                  progressColor: Colors.orange,
-                ),
-                ComplaintBox(
-                  title: "Mechanical Department",
-                  total: 56,
-                  solved: 50,
-                  remaining: 6,
-                  icon: Icons.settings,
-                  progressColor: Colors.purple,
-                ),
-                ComplaintBox(
-                  title: "Electrical Department",
-                  total: 56,
-                  solved: 50,
-                  remaining: 6,
-                  icon: Icons.settings,
-                  progressColor: Colors.purple,
-                ),
-                ComplaintBox(
-                  title: "Boys Hostel A",
-                  total: 64,
-                  solved: 23,
-                  remaining: 41,
-                  icon: Icons.home,
-                  progressColor: Colors.cyan,
-                ),
-                ComplaintBox(
-                  title: "Boys Hostel B",
-                  total: 64,
-                  solved: 23,
-                  remaining: 41,
-                  icon: Icons.home,
-                  progressColor: Color.fromARGB(255, 77, 112, 73),
-                ),
-                ComplaintBox(
-                  title: "Boys Hostel C",
-                  total: 64,
-                  solved: 23,
-                  remaining: 41,
-                  icon: Icons.home,
-                  progressColor: Color.fromARGB(255, 108, 90, 169),
-                ),
-                ComplaintBox(
-                  title: "Girls Hostel",
-                  total: 64,
-                  solved: 23,
-                  remaining: 41,
-                  icon: Icons.home,
-                  progressColor: Colors.cyan,
-                ),
-              ],
+            Container(
+              margin: const EdgeInsets.only(top: 25),
+              child: PrimaryButton(
+                text: 'Create Complaint Box',
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.addComplaintBox);
+                },
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            // ✅ No Expanded, no ListView here
+            const ComplaintBox(
+              title: "Computer Science Department",
+              total: 114,
+              solved: 90,
+              remaining: 24,
+              icon: Icons.computer,
+              progressColor: Colors.orange,
+            ),
+            const ComplaintBox(
+              title: "Mechanical Department",
+              total: 56,
+              solved: 50,
+              remaining: 6,
+              icon: Icons.settings,
+              progressColor: Colors.purple,
+            ),
+            const ComplaintBox(
+              title: "Electrical Department",
+              total: 56,
+              solved: 50,
+              remaining: 6,
+              icon: Icons.settings,
+              progressColor: Colors.purple,
+            ),
+            const ComplaintBox(
+              title: "Boys Hostel A",
+              total: 64,
+              solved: 23,
+              remaining: 41,
+              icon: Icons.home,
+              progressColor: Colors.cyan,
+            ),
+            const ComplaintBox(
+              title: "Boys Hostel B",
+              total: 64,
+              solved: 23,
+              remaining: 41,
+              icon: Icons.home,
+              progressColor: Color.fromARGB(255, 77, 112, 73),
+            ),
+            const ComplaintBox(
+              title: "Boys Hostel C",
+              total: 64,
+              solved: 23,
+              remaining: 41,
+              icon: Icons.home,
+              progressColor: Color.fromARGB(255, 108, 90, 169),
+            ),
+            const ComplaintBox(
+              title: "Girls Hostel",
+              total: 64,
+              solved: 23,
+              remaining: 41,
+              icon: Icons.home,
+              progressColor: Colors.cyan,
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
       bottomNavigationBar: CustomBottomBar(
         selectedIndex: _selectedIndex,
@@ -136,4 +182,47 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       ),
     );
   }
+}
+
+class CircularArcPainter extends CustomPainter {
+  final List<Color> colors;
+  final double strokeWidth;
+
+  CircularArcPainter({
+    required this.colors,
+    required this.strokeWidth,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width - strokeWidth) / 2;
+
+    final totalAngle = 210 * (math.pi / 180);
+    final startAngle = -195 * (math.pi / 180);
+
+    final segmentCount = colors.length;
+    final segmentAngle = totalAngle / segmentCount;
+
+    for (var i = 0; i < segmentCount; i++) {
+      final paint = Paint()
+        ..color = colors[i]
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth
+        ..strokeCap = StrokeCap.round;
+
+      final segmentStart = startAngle + (i * segmentAngle);
+
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        segmentStart,
+        segmentAngle - (2 * math.pi / 180),
+        false,
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

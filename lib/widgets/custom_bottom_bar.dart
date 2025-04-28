@@ -26,7 +26,7 @@ class CustomBottomBar extends StatelessWidget {
         ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.event),
-          label: 'Events',
+          label: 'Timeline',
         ),
         BottomNavigationBarItem(
           icon: Padding(

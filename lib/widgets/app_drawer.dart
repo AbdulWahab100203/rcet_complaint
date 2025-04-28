@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.event),
-            title: const Text('Events'),
+            title: const Text('Timeline'),
             onTap: () {
               Navigator.pushReplacementNamed(
                   context, AppRoutes.event); // Update route if needed
