@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rcet_complaint/widgets/app_drawer.dart';
 import '../../widgets/custom_bottom_bar.dart';
-import '../../widgets/dashboard_card.dart';
 import '../../routes/app_routes.dart';
 import 'resolved_complaints.dart';
 import 'unassigned_complaints.dart';
 import 'assigned_complaints.dart';
 
 class ComplaintScreenMain extends StatefulWidget {
+  const ComplaintScreenMain({Key? key}) : super(key: key);
+
   @override
   State<ComplaintScreenMain> createState() => _ComplaintScreenMainState();
 }
@@ -37,18 +38,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 5),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //     children: const [
-            //       DashboardCard(title: "ComplaintBox", count: "3"),
-            //       DashboardCard(title: "Complaints", count: "99"),
-            //       DashboardCard(title: "Resolved", count: "56"),
-            //     ],
-            //   ),
-            // ),
+            // const SizedBox(height: 5),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),

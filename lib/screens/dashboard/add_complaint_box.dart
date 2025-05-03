@@ -11,7 +11,6 @@ class AddComplaintBox extends StatefulWidget {
 class _AddComplaintBoxState extends State<AddComplaintBox> {
   String name = '';
   String description = '';
-  int _maxUsers = 1;
   int _selectedIndex = 2;
   @override
   Widget build(BuildContext context) {
@@ -49,31 +48,10 @@ class _AddComplaintBoxState extends State<AddComplaintBox> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              // const SizedBox(height: 20),
-              // const Text('Maximum Users'),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     IconButton(
-              //       icon: const Icon(Icons.remove),
-              //       onPressed: () {
-              //         if (_maxUsers > 1) {
-              //           setState(() => _maxUsers--);
-              //         }
-              //       },
-              //     ),
-              //     Text('$_maxUsers', style: const TextStyle(fontSize: 20)),
-              //     IconButton(
-              //       icon: const Icon(Icons.add),
-              //       onPressed: () => setState(() => _maxUsers++),
-              //     ),
-              //   ],
-              // ),
               const SizedBox(height: 20),
               PrimaryButton(
                 text: 'Create',
                 onPressed: () {
-                  // You can use `name`, `description`, and `_maxUsers` here
                   Navigator.pushReplacementNamed(
                       context, AppRoutes.complaintbox);
                 },

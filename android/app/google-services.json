@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "339953698791",
+    "project_id": "rcet-complaint",
+    "storage_bucket": "rcet-complaint.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339953698791:android:30900dc42dc46147af1f42",
+        "android_client_info": {
+          "package_name": "com.example.rcet_complaint"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-XK0NAG6POXtJVOA--tKzKxPebz2bPTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

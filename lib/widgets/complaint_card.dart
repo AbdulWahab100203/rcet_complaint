@@ -8,51 +8,73 @@ class ComplaintCard extends StatelessWidget {
   const ComplaintCard({
     required this.id,
     required this.title,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.black),
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        leading: Text(
-          id,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 14),
-        ),
-        trailing: GestureDetector(
-          onTap: () {
-            // Debugging line to check if onTap is triggered
-            print("Navigating to Complaint Detail: $id, $title");
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ComplaintDetailScreen(
-                  id: id,
-                  title: title,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ComplaintDetailScreen(
+                id: id,
+                title: title,
+              ),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.blue.shade100,
+                child: Text(
+                  id,
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            );
-          },
-          child: const Text(
-            "View",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline,
-            ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'ID: $id',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Colors.grey,
+              ),
+            ],
           ),
         ),
       ),
