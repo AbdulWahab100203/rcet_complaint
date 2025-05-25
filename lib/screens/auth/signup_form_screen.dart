@@ -47,7 +47,7 @@ class _SignUpFormScreenState extends State<SignUpFormScreen> {
           SnackBar(
               content: Text("Signup successful. Please verify your email.")),
         );
-        Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
+        Navigator.pushReplacementNamed(context, AppRoutes.login);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Signup failed. Please try again.")),

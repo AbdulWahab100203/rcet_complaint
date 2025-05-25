@@ -21,4 +21,21 @@ class UserAuth {
       return false;
     }
   }
+
+  static Future<bool> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      return true; // Login successful
+    } on FirebaseAuthException catch (e) {
+      print("Login error: ${e.message}");
+      return false; // Login failed
+    } catch (e) {
+      print("Unexpected error: $e");
+      return false;
+    }
+  }
 }

@@ -2,13 +2,61 @@ import 'package:flutter/material.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/primary_button.dart';
 import '../../widgets/text_input_field.dart';
+import '../../util/user_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  Future<void> _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      bool success = await UserAuth.login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (success) {
+        // Navigate to dashboard or desired screen on successful login
+        Navigator.pushReplacementNamed(context, AppRoutes.mainDashboard);
+      } else {
+        // Show error message on failed login
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text("Login failed. Please check your credentials.")),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("An unexpected error occurred. Please try again.")),
+      );
+    }
+  }
+
+  // Synchronous helper to call the async _login function
+  void _handleLoginPressed() {
+    _login();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -32,13 +80,13 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextInputField(
-                controller: emailController,
+                controller: _emailController,
                 hintText: 'Email',
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
               TextInputField(
-                controller: passwordController,
+                controller: _passwordController,
                 hintText: 'Password',
                 obscureText: true,
               ),
@@ -55,10 +103,8 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 24),
               PrimaryButton(
                 text: 'Login',
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, AppRoutes.mainDashboard);
-                },
+                onPressed: _handleLoginPressed,
+                isLoading: _isLoading,
               ),
               const SizedBox(height: 24),
               Row(
