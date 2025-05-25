@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/employee.dart';
+import '../../widgets/app_drawer.dart';
 
 class EmployeesScreen extends StatefulWidget {
   static const routeName = '/employees';
@@ -19,47 +21,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     'Painter',
   ];
 
-  final List<Employee> employees = [
-    Employee(
-      id: 'e1',
-      name: 'Ali Khan',
-      department: 'Electrician',
-      contact: '03001234567',
-      email: 'ali.khan@example.com',
-    ),
-    Employee(
-      id: 'e2',
-      name: 'Ahmed Raza',
-      department: 'Plumber',
-      contact: '03019876543',
-      email: 'ahmed.raza@example.com',
-    ),
-    Employee(
-      id: 'e3',
-      name: 'Sana Ullah',
-      department: 'Sweeper',
-      contact: '03111234567',
-      email: 'sana.ullah@example.com',
-    ),
-    Employee(
-      id: 'e4',
-      name: 'Farhan Ali',
-      department: 'Carpenter',
-      contact: '03211234567',
-      email: 'farhan.ali@example.com',
-    ),
-    Employee(
-      id: 'e5',
-      name: 'Zubair Ahmad',
-      department: 'Painter',
-      contact: '03311234567',
-      email: 'zubair.ahmad@example.com',
-    ),
-  ];
-
   void _showAddEmployeeDialog() {
     final nameController = TextEditingController();
-    final contactController = TextEditingController();
+    final phoneController = TextEditingController();
     final emailController = TextEditingController();
     String? selectedDepartment;
 
@@ -76,8 +40,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                 decoration: const InputDecoration(labelText: 'Name'),
               ),
               TextField(
-                controller: contactController,
-                decoration: const InputDecoration(labelText: 'Contact'),
+                controller: phoneController,
+                decoration: const InputDecoration(labelText: 'Phone'),
                 keyboardType: TextInputType.phone,
               ),
               TextField(
@@ -109,7 +73,26 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () async {
+              if (nameController.text.isEmpty ||
+                  phoneController.text.isEmpty ||
+                  emailController.text.isEmpty ||
+                  selectedDepartment == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please fill all fields')),
+                );
+                return;
+              }
+              await FirebaseFirestore.instance.collection('employees').add({
+                'name': nameController.text,
+                'phone': phoneController.text,
+                'email': emailController.text,
+                'department': selectedDepartment,
+                'role': '',
+                'createdAt': FieldValue.serverTimestamp(),
+              });
+              Navigator.of(context).pop();
+            },
             child: const Text('Add'),
           ),
         ],
@@ -129,19 +112,35 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             tabs: departments.map((dept) => Tab(text: dept)).toList(),
           ),
         ),
-        body: TabBarView(
-          children: departments.map((department) {
-            final deptEmployees =
-                employees.where((emp) => emp.department == department).toList();
-            return ListView.builder(
-              itemCount: deptEmployees.length,
-              itemBuilder: (ctx, i) => ListTile(
-                title: Text(deptEmployees[i].name),
-                subtitle: Text(deptEmployees[i].contact),
-                trailing: Text(deptEmployees[i].email),
-              ),
+        drawer: const AppDrawer(),
+        body: StreamBuilder<QuerySnapshot>(
+          stream:
+              FirebaseFirestore.instance.collection('employees').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final docs = snapshot.data!.docs;
+            final allEmployees = docs
+                .map((doc) => Employee.fromFirestore(
+                    doc.data() as Map<String, dynamic>, doc.id))
+                .toList();
+            return TabBarView(
+              children: departments.map((department) {
+                final deptEmployees = allEmployees
+                    .where((emp) => emp.department == department)
+                    .toList();
+                return ListView.builder(
+                  itemCount: deptEmployees.length,
+                  itemBuilder: (ctx, i) => ListTile(
+                    title: Text(deptEmployees[i].name),
+                    subtitle: Text(deptEmployees[i].phone),
+                    trailing: Text(deptEmployees[i].email),
+                  ),
+                );
+              }).toList(),
             );
-          }).toList(),
+          },
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _showAddEmployeeDialog,
