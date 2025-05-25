@@ -38,23 +38,23 @@ class _SettingScreenState extends State<SettingScreen> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 children: [
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   Center(
                     child: Column(
                       children: [
                         CircleAvatar(
-                          radius: 50,
+                          radius: 40,
                           backgroundColor: Colors.grey[200],
                           child: const Icon(
                             Icons.person,
-                            size: 40,
+                            size: 25,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 12),
                         const Text(
                           'Ali Hassan',
                           style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -62,7 +62,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         const Text(
                           'ali@gmail.com',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 11,
                             color: Colors.grey,
                           ),
                         ),
@@ -74,11 +74,11 @@ class _SettingScreenState extends State<SettingScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 12),
                   const Text(
                     'General',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -94,29 +94,29 @@ class _SettingScreenState extends State<SettingScreen> {
                           leading: const Icon(Icons.lock_outline),
                           title: const Text('Change Password'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 14),
+                              const Icon(Icons.arrow_forward_ios, size: 12),
                           onTap: () {
                             Navigator.pushNamed(
                                 context, AppRoutes.changePassword);
                           },
                         ),
-                        const Divider(height: 1),
-                        ListTile(
-                          leading: const Icon(Icons.dark_mode_outlined),
-                          title: const Text('Dark Mode'),
-                          trailing: const Switch(
-                            value: false,
-                            onChanged: null,
-                          ),
-                        ),
+                        // const Divider(height: 1),
+                        // ListTile(
+                        //   leading: const Icon(Icons.dark_mode_outlined),
+                        //   title: const Text('Dark Mode'),
+                        //   trailing: const Switch(
+                        //     value: false,
+                        //     onChanged: null,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 12),
                   const Text(
                     'Help & Legal',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -132,7 +132,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           leading: const Icon(Icons.help_outline),
                           title: const Text('Help'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 14),
+                              const Icon(Icons.arrow_forward_ios, size: 12),
                           onTap: () {
                             Navigator.pushNamed(context, AppRoutes.help);
                           },
@@ -142,7 +142,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           leading: const Icon(Icons.policy_outlined),
                           title: const Text('Policies'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 14),
+                              const Icon(Icons.arrow_forward_ios, size: 12),
                           onTap: () {
                             Navigator.pushNamed(context, AppRoutes.policies);
                           },
@@ -152,7 +152,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           leading: const Icon(Icons.report_problem_outlined),
                           title: const Text('Report Problem'),
                           trailing:
-                              const Icon(Icons.arrow_forward_ios, size: 14),
+                              const Icon(Icons.arrow_forward_ios, size: 12),
                           onTap: () {
                             Navigator.pushNamed(
                                 context, AppRoutes.reportProblem);

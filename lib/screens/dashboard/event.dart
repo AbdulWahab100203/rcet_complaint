@@ -3,6 +3,8 @@ import 'package:rcet_complaint/routes/app_routes.dart';
 import '../../widgets/event_card.dart';
 import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/app_drawer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../models/complaint.dart';
 
 class EventScheduleScreen extends StatefulWidget {
   @override
@@ -12,13 +14,14 @@ class EventScheduleScreen extends StatefulWidget {
 class _EventScheduleScreenState extends State<EventScheduleScreen> {
   int _selectedIndex = 1;
   late String _selectedDay;
-  String _selectedMonth = 'January';
+  late String _selectedMonth;
   late final DateTime _currentDate;
 
   @override
   void initState() {
     super.initState();
     _currentDate = DateTime.now();
+    _selectedMonth = months[_currentDate.month - 1];
     _selectedDay = _currentDate.day.toString().padLeft(2, '0');
   }
 
@@ -73,16 +76,6 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
     'October',
     'November',
     'December',
-  ];
-
-  final List<Map<String, dynamic>> events = [
-    {
-      "id": 1,
-      "title": "Maintenance of Hostel kitchen switch boards.",
-      "time": "9:00 AM",
-      "status": "green"
-    },
-    {"id": 2, "title": "Other Event", "time": "11:00 AM", "status": "red"},
   ];
 
   @override
@@ -151,9 +144,15 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
                           if (newValue != null) {
                             setState(() {
                               _selectedMonth = newValue;
-                              final firstDay = days.first['day'];
-                              if (firstDay != null) {
-                                _selectedDay = firstDay;
+                              if (_selectedMonth ==
+                                  months[_currentDate.month - 1]) {
+                                _selectedDay =
+                                    _currentDate.day.toString().padLeft(2, '0');
+                              } else {
+                                final firstDay = days.first['day'];
+                                if (firstDay != null) {
+                                  _selectedDay = firstDay;
+                                }
                               }
                             });
                           }
@@ -164,15 +163,43 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
                 ],
               ),
             ),
+            // Event count and filtering
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                '${events.length} events for today',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
-                ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('complaints')
+                    .where('status', isEqualTo: 'resolved')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Text('0 events for today',
+                        style: TextStyle(fontSize: 16));
+                  }
+                  final docs = snapshot.data!.docs;
+                  final allComplaints = docs
+                      .map((doc) => Complaint.fromFirestore(
+                          doc.data() as Map<String, dynamic>, doc.id))
+                      .toList();
+                  final filteredComplaints = allComplaints.where((complaint) {
+                    final date = complaint.updatedAt ??
+                        complaint.createdAt ??
+                        DateTime.now();
+                    final monthMatch =
+                        date.month == (months.indexOf(_selectedMonth) + 1);
+                    final dayMatch =
+                        date.day.toString().padLeft(2, '0') == _selectedDay;
+                    return monthMatch && dayMatch;
+                  }).toList();
+                  return Text(
+                    '${filteredComplaints.length} events for today',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 20),
@@ -242,11 +269,52 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: events.length,
-                itemBuilder: (context, index) {
-                  return EventCard(
-                    event: events[index],
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('complaints')
+                    .where('status', isEqualTo: 'resolved')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final docs = snapshot.data!.docs;
+                  final allComplaints = docs
+                      .map((doc) => Complaint.fromFirestore(
+                          doc.data() as Map<String, dynamic>, doc.id))
+                      .toList();
+                  final filteredComplaints = allComplaints.where((complaint) {
+                    final date = complaint.updatedAt ??
+                        complaint.createdAt ??
+                        DateTime.now();
+                    final monthMatch =
+                        date.month == (months.indexOf(_selectedMonth) + 1);
+                    final dayMatch =
+                        date.day.toString().padLeft(2, '0') == _selectedDay;
+                    return monthMatch && dayMatch;
+                  }).toList();
+                  if (filteredComplaints.isEmpty) {
+                    return const Center(
+                        child: Text('No resolved complaints for this day.'));
+                  }
+                  return ListView.builder(
+                    itemCount: filteredComplaints.length,
+                    itemBuilder: (context, index) {
+                      final complaint = filteredComplaints[index];
+                      return EventCard(
+                        event: {
+                          "id": index + 1,
+                          "title": complaint.title,
+                          "time": (complaint.updatedAt ??
+                                  complaint.createdAt ??
+                                  DateTime.now())
+                              .toString()
+                              .substring(11, 16),
+                          "status": "green",
+                          "description": complaint.description,
+                        },
+                      );
+                    },
                   );
                 },
               ),

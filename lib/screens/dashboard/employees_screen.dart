@@ -19,6 +19,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     'Sweeper',
     'Carpenter',
     'Painter',
+    'IT',
   ];
 
   void _showAddEmployeeDialog() {
