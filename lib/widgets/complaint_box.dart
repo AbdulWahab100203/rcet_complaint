@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import '../screens/dashboard/department_complaint_screen.dart';
+import '../models/department_complaint_stats.dart';
 
 class ComplaintBox extends StatelessWidget {
-  final String title;
-  final int total;
-  final int solved;
-  final int remaining;
+  final DepartmentComplaintStats stats;
   final IconData icon;
   final Color progressColor;
 
   const ComplaintBox({
-    super.key,
-    required this.title,
-    required this.total,
-    required this.solved,
-    required this.remaining,
+    Key? key,
+    required this.stats,
     required this.icon,
     required this.progressColor,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double progress = stats.total > 0 ? stats.solved / stats.total : 0.0;
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DepartmentComplaintScreen(
-              departmentName: title,
-              total: total,
-              solved: solved,
-              remaining: remaining,
+              departmentName: stats.departmentName,
+              total: stats.total,
+              solved: stats.solved,
+              remaining: stats.remaining,
             ),
           ),
         );
@@ -47,30 +43,45 @@ class ComplaintBox extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: Colors.blue, size: 24),
+                Icon(icon, color: Colors.white, size: 24),
                 const SizedBox(width: 8),
-                Text(title,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
-                Spacer(),
-                Text("$total",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Expanded(
+                  child: Text(
+                    stats.departmentName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Text(
+                  stats.total.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 4),
-            Text("$remaining left to solve",
-                style: TextStyle(color: Colors.white60)),
-            SizedBox(height: 4),
+            const SizedBox(height: 8),
+            Text(
+              '${stats.remaining} left to solve',
+              style: const TextStyle(color: Colors.white70, fontSize: 14),
+            ),
+            const SizedBox(height: 4),
             LinearProgressIndicator(
-              value: solved / total,
+              value: progress,
               backgroundColor: Colors.white24,
               color: progressColor,
+              minHeight: 6,
             ),
-            SizedBox(height: 4),
-            Text("$solved Solved", style: TextStyle(color: Colors.white60)),
+            const SizedBox(height: 4),
+            Text(
+              '${stats.solved} Solved',
+              style: const TextStyle(color: Colors.white70, fontSize: 14),
+            ),
           ],
         ),
       ),

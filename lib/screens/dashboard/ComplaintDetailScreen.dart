@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 class ComplaintDetailScreen extends StatelessWidget {
   final String id;
   final String title;
+  final int total;
+  final int solved;
 
   const ComplaintDetailScreen({
     required this.id,
     required this.title,
+    this.total = 1,
+    this.solved = 0,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double progress = total > 0 ? solved / total : 0.0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Complaint Detail'),
@@ -72,6 +77,18 @@ class ComplaintDetailScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
+                    LinearProgressIndicator(
+                      value: progress,
+                      backgroundColor: Colors.grey[300],
+                      color: Colors.blue,
+                      minHeight: 6,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '$solved of $total solved',
+                      style:
+                          const TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
                     const Divider(),
                     const SizedBox(height: 16),
                     _buildInfoRow('Status', 'Under Review', Colors.orange),
