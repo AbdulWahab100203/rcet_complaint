@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../widgets/profile_pic.dart';
-import '../../widgets/custom_text_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
