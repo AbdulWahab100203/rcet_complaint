@@ -1,0 +1,262 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+% Document formatting
+\geometry{margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Code listing settings
+\lstset{
+    language=Dart,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=5pt,
+    frame=single,
+    showstringspaces=false,
+}
+
+% Title formatting
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\huge\bfseries RCET Complaint Management System\par}
+    \vspace{1cm}
+    {\Large\itshape Technical Documentation\par}
+    \vspace{2cm}
+    {\Large\itshape Developed by: [Your Name]\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\subsection{Project Overview}
+The RCET Complaint Management System is a Flutter-based mobile application designed to streamline the complaint management process within the institution. The system integrates Firebase services for authentication, real-time database management, and cloud storage.
+
+\subsection{Technologies Used}
+\begin{itemize}
+    \item Flutter Framework
+    \item Firebase Authentication
+    \item Cloud Firestore
+    \item Dart Programming Language
+\end{itemize}
+
+\section{System Architecture}
+\subsection{Frontend Architecture}
+The application follows a modular architecture with the following key components:
+\begin{itemize}
+    \item Screens
+    \item Widgets
+    \item Services
+    \item Models
+    \item Routes
+\end{itemize}
+
+\subsection{Backend Architecture}
+The backend is powered by Firebase services:
+\begin{itemize}
+    \item Firebase Authentication for user management
+    \item Cloud Firestore for data storage
+    \item Firebase Security Rules for data protection
+\end{itemize}
+
+\section{Database Structure}
+\subsection{Firestore Collections}
+\subsubsection{Complaints Collection}
+\begin{lstlisting}
+{
+    complaintid: string,
+    title: string,
+    description: string,
+    status: string,
+    department: string,
+    assignedTo: string,
+    createdAt: timestamp,
+    resolutionNote: string
+}
+\end{lstlisting}
+
+\subsubsection{Employees Collection}
+\begin{lstlisting}
+{
+    name: string,
+    email: string,
+    phone: string,
+    role: string,
+    department: string
+}
+\end{lstlisting}
+
+\subsubsection{Departments Collection}
+\begin{lstlisting}
+{
+    name: string,
+    description: string,
+    head: string
+}
+\end{lstlisting}
+
+\section{Key Features}
+\subsection{Authentication}
+\begin{itemize}
+    \item User registration
+    \item Login/Logout functionality
+    \item Password reset
+    \item Profile management
+\end{itemize}
+
+\subsection{Complaint Management}
+\begin{itemize}
+    \item Create new complaints
+    \item View complaint details
+    \item Update complaint status
+    \item Assign complaints to employees
+    \item Track complaint resolution
+\end{itemize}
+
+\subsection{Department Management}
+\begin{itemize}
+    \item View department-wise complaints
+    \item Department statistics
+    \item Filter complaints by department
+\end{itemize}
+
+\section{User Interface}
+\subsection{Main Screens}
+\begin{itemize}
+    \item Login Screen
+    \item Dashboard
+    \item Complaint Box
+    \item Event Schedule
+    \item Settings
+\end{itemize}
+
+\subsection{UI Components}
+\begin{itemize}
+    \item Custom Bottom Navigation Bar
+    \item App Drawer
+    \item Complaint Cards
+    \item Department Statistics Cards
+    \item Progress Indicators
+\end{itemize}
+
+\section{Implementation Details}
+\subsection{Authentication Implementation}
+The authentication system uses Firebase Authentication with email and password. The implementation includes:
+\begin{itemize}
+    \item User registration with email verification
+    \item Secure login process
+    \item Session management
+    \item Profile data synchronization with Firestore
+\end{itemize}
+
+\subsection{Complaint Management Implementation}
+The complaint management system includes:
+\begin{itemize}
+    \item Real-time complaint updates
+    \item Status tracking
+    \item Department assignment
+    \item Resolution tracking
+\end{itemize}
+
+\section{Security Measures}
+\subsection{Firebase Security Rules}
+\begin{lstlisting}
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /complaints/{complaintId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    match /employees/{employeeId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        get(/databases/$(database)/documents/employees/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}
+\end{lstlisting}
+
+\section{Testing}
+\subsection{Unit Testing}
+\begin{itemize}
+    \item Authentication tests
+    \item Data model tests
+    \item Service layer tests
+\end{itemize}
+
+\subsection{Integration Testing}
+\begin{itemize}
+    \item Firebase integration tests
+    \item UI integration tests
+    \item Navigation flow tests
+\end{itemize}
+
+\section{Deployment}
+\subsection{Android Deployment}
+\begin{itemize}
+    \item Generate signed APK
+    \item Configure Firebase
+    \item Update security rules
+    \item Test on multiple devices
+\end{itemize}
+
+\subsection{iOS Deployment}
+\begin{itemize}
+    \item Configure iOS settings
+    \item Generate certificates
+    \item Upload to App Store
+\end{itemize}
+
+\section{Maintenance and Support}
+\subsection{Regular Updates}
+\begin{itemize}
+    \item Security patches
+    \item Feature updates
+    \item Bug fixes
+\end{itemize}
+
+\subsection{Backup and Recovery}
+\begin{itemize}
+    \item Firestore backup strategy
+    \item Data recovery procedures
+    \item Disaster recovery plan
+\end{itemize}
+
+\section{Conclusion}
+The RCET Complaint Management System provides a robust solution for managing complaints within the institution. The system's architecture ensures scalability, security, and ease of maintenance.
+
+\section{Appendices}
+\subsection{API Documentation}
+Detailed documentation of all API endpoints and their usage.
+
+\subsection{User Manual}
+Step-by-step guide for users to navigate and use the application.
+
+\subsection{Developer Guide}
+Instructions for developers to set up and contribute to the project.
+
+\end{document} 

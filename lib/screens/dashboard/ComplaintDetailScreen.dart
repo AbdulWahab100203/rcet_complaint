@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
   final String id;
   final String title;
-  final int total;
-  final int solved;
 
   const ComplaintDetailScreen({
     required this.id,
     required this.title,
-    this.total = 1,
-    this.solved = 0,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final double progress = total > 0 ? solved / total : 0.0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Complaint Detail'),
@@ -24,12 +20,20 @@ class ComplaintDetailScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
+      body: FutureBuilder<DocumentSnapshot>(
+        future:
+            FirebaseFirestore.instance.collection('complaints').doc(id).get(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.data!.exists) {
+            return const Center(child: Text('Complaint not found.'));
+          }
+          final data = snapshot.data!.data() as Map<String, dynamic>;
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -44,7 +48,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                         CircleAvatar(
                           backgroundColor: Colors.blue.shade100,
                           child: Text(
-                            id,
+                            id.substring(0, 4),
                             style: const TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
@@ -57,7 +61,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Complaint ID: $id',
+                                'Complaint ID: ${data['complaintid'] ?? id}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -65,7 +69,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                title,
+                                data['title'] ?? '',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.black87,
@@ -78,24 +82,32 @@ class ComplaintDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     LinearProgressIndicator(
-                      value: progress,
+                      value: 0, // You can set progress if you want
                       backgroundColor: Colors.grey[300],
                       color: Colors.blue,
                       minHeight: 6,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '$solved of $total solved',
+                      '0 of 1 solved', // You can update this if you have solved/total logic
                       style:
                           const TextStyle(fontSize: 14, color: Colors.black54),
                     ),
                     const Divider(),
-                    const SizedBox(height: 16),
-                    _buildInfoRow('Status', 'Under Review', Colors.orange),
-                    const SizedBox(height: 12),
-                    _buildInfoRow('Department', 'IT Department', Colors.blue),
-                    const SizedBox(height: 12),
-                    _buildInfoRow('Priority', 'High', Colors.red),
+                    const SizedBox(height: 8),
+                    _buildInfoRow(
+                        'Status', data['status'] ?? '', Colors.orange),
+                    const SizedBox(height: 8),
+                    _buildInfoRow(
+                        'Department', data['department'] ?? '', Colors.blue),
+                    const SizedBox(height: 8),
+                    _buildInfoRow(
+                        'Assigned To', data['assignedTo'] ?? '', Colors.purple),
+                    const SizedBox(height: 8),
+                    _buildInfoRow('User ID', data['userId'] ?? '', Colors.teal),
+                    const SizedBox(height: 8),
+                    _buildInfoRow('Priority', 'High',
+                        Colors.red), // If you have a priority field, use it
                     const SizedBox(height: 16),
                     const Text(
                       'Description',
@@ -106,18 +118,38 @@ class ComplaintDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      title,
+                      data['description'] ?? '',
                       style: const TextStyle(
                         fontSize: 15,
                         color: Colors.black87,
                       ),
                     ),
+                    if ((data['resolutionNote'] ?? '')
+                        .toString()
+                        .isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Resolution Note',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        data['resolutionNote'],
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rcet_complaint/widgets/app_drawer.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/custom_bottom_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -12,6 +14,31 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   int _selectedIndex = 4; // Profile/Settings tab is selected
+  String? userName;
+  String? userEmail;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserInfo();
+  }
+
+  Future<void> fetchUserInfo() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      userEmail = user.email;
+      // If you store user names in Firestore under 'employees' or 'users' collection:
+      final doc = await FirebaseFirestore.instance
+          .collection('employees') // or 'users', depending on your structure
+          .doc(user.uid)
+          .get();
+      setState(() {
+        userName = doc.data()?['name'] ?? user.displayName ?? 'No Name';
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,21 +78,25 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        const Text(
-                          'Ali Hassan',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        isLoading
+                            ? const CircularProgressIndicator()
+                            : Text(
+                                userName ?? '',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                         const SizedBox(height: 8),
-                        const Text(
-                          'ali@gmail.com',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey,
-                          ),
-                        ),
+                        isLoading
+                            ? const SizedBox.shrink()
+                            : Text(
+                                userEmail ?? '',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
                         TextButton(
                           onPressed: () => Navigator.pushNamed(
                               context, AppRoutes.editProfile),
@@ -195,7 +226,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 // Handle navigation based on index
                 switch (index) {
                   case 0: // Home
-
                     Navigator.pushReplacementNamed(
                         context, AppRoutes.mainDashboard);
                     break;

@@ -5,6 +5,7 @@ import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/app_drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/complaint.dart';
+import 'package:rcet_complaint/screens/dashboard/ComplaintDetailScreen.dart';
 
 class EventScheduleScreen extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
   late String _selectedDay;
   late String _selectedMonth;
   late final DateTime _currentDate;
+  late final ScrollController _scrollController;
 
   @override
   void initState() {
@@ -23,6 +25,11 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
     _currentDate = DateTime.now();
     _selectedMonth = months[_currentDate.month - 1];
     _selectedDay = _currentDate.day.toString().padLeft(2, '0');
+    _scrollController = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final todayIndex = _currentDate.day - 1;
+      _scrollController.jumpTo(todayIndex * 63.0);
+    });
   }
 
   List<Map<String, String>> get days {
@@ -207,6 +214,7 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
               height: 80,
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: ListView.builder(
+                controller: _scrollController,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 scrollDirection: Axis.horizontal,
                 itemCount: days.length,
@@ -301,18 +309,31 @@ class _EventScheduleScreenState extends State<EventScheduleScreen> {
                     itemCount: filteredComplaints.length,
                     itemBuilder: (context, index) {
                       final complaint = filteredComplaints[index];
-                      return EventCard(
-                        event: {
-                          "id": index + 1,
-                          "title": complaint.title,
-                          "time": (complaint.updatedAt ??
-                                  complaint.createdAt ??
-                                  DateTime.now())
-                              .toString()
-                              .substring(11, 16),
-                          "status": "green",
-                          "description": complaint.description,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ComplaintDetailScreen(
+                                id: complaint.id,
+                                title: complaint.title,
+                              ),
+                            ),
+                          );
                         },
+                        child: EventCard(
+                          event: {
+                            "id": index + 1,
+                            "title": complaint.title,
+                            "time": (complaint.updatedAt ??
+                                    complaint.createdAt ??
+                                    DateTime.now())
+                                .toString()
+                                .substring(11, 16),
+                            "status": "green",
+                            "description": complaint.description,
+                          },
+                        ),
                       );
                     },
                   );
