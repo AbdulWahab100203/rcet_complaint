@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -15,6 +17,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _showCurrentPassword = false;
   bool _showNewPassword = false;
   bool _showConfirmPassword = false;
+  bool _isLoading = false;
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
@@ -38,6 +41,75 @@ class _ChangePasswordState extends State<ChangePassword> {
     return null;
   }
 
+  Future<void> _changePassword() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) throw Exception('No user logged in');
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: _currentPasswordController.text.trim(),
+      );
+      // Re-authenticate
+      await user.reauthenticateWithCredential(cred);
+      // Update password in Firebase Auth
+      await user.updatePassword(_newPasswordController.text.trim());
+      // Update password in Firestore (not recommended in production)
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc(user.uid)
+          .update({'password': _newPasswordController.text.trim()});
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Password changed successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to change password: \\${e.message}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to change password: \\${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _currentPasswordController.dispose();
+    _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,16 +125,28 @@ class _ChangePasswordState extends State<ChangePassword> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Password Requirements:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Password Requirements:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildRequirementText('At least 8 characters long'),
+                      _buildRequirementText('One uppercase letter'),
+                      _buildRequirementText('One lowercase letter'),
+                      _buildRequirementText('One number'),
+                      _buildRequirementText('One special character'),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 8),
-              _buildRequirementText('At least 8 characters long'),
-              _buildRequirementText('One uppercase letter'),
-              _buildRequirementText('One lowercase letter'),
-              _buildRequirementText('One number'),
-              _buildRequirementText('One special character'),
               const SizedBox(height: 24),
               TextFormField(
                 controller: _currentPasswordController,
@@ -70,6 +154,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 decoration: InputDecoration(
                   labelText: 'Current Password',
                   border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showCurrentPassword
@@ -97,6 +182,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 decoration: InputDecoration(
                   labelText: 'New Password',
                   border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showNewPassword
@@ -119,6 +205,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 decoration: InputDecoration(
                   labelText: 'Confirm New Password',
                   border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _showConfirmPassword
@@ -145,15 +232,28 @@ class _ChangePasswordState extends State<ChangePassword> {
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
+                height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _isLoading ? null : _changePassword,
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                  child: const Text(
-                    'Change Password',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        )
+                      : const Text(
+                          'Change Password',
+                          style: TextStyle(fontSize: 16),
+                        ),
                 ),
               ),
             ],

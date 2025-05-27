@@ -24,17 +24,24 @@ class _SettingScreenState extends State<SettingScreen> {
     fetchUserInfo();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Always refresh user info when returning to this screen
+    fetchUserInfo();
+  }
+
   Future<void> fetchUserInfo() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       userEmail = user.email;
-      // If you store user names in Firestore under 'employees' or 'users' collection:
+      // Fetch from 'User' collection and use 'username' field
       final doc = await FirebaseFirestore.instance
-          .collection('employees') // or 'users', depending on your structure
+          .collection('User')
           .doc(user.uid)
           .get();
       setState(() {
-        userName = doc.data()?['name'] ?? user.displayName ?? 'No Name';
+        userName = doc.data()?['username'] ?? user.displayName ?? 'No Name';
         isLoading = false;
       });
     }
@@ -98,8 +105,11 @@ class _SettingScreenState extends State<SettingScreen> {
                                 ),
                               ),
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(
-                              context, AppRoutes.editProfile),
+                          onPressed: () async {
+                            await Navigator.pushNamed(
+                                context, AppRoutes.editProfile);
+                            fetchUserInfo();
+                          },
                           child: const Text('Edit profile'),
                         ),
                       ],
