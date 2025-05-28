@@ -263,6 +263,15 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
         complaint.department.isNotEmpty ? complaint.department : null;
     String? selectedEmployee;
 
+    final List<String> departments = [
+      'Plumber',
+      'Electrician',
+      'Sweeper',
+      'Carpenter',
+      'Painter',
+      'IT',
+    ];
+
     showDialog(
       context: context,
       builder: (context) {
@@ -282,35 +291,43 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
                       const SizedBox(height: 8),
                       Text(complaint.description),
                       const SizedBox(height: 16),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection('departments')
-                            .snapshots(),
-                        builder: (context, deptSnapshot) {
-                          if (!deptSnapshot.hasData) {
-                            return const CircularProgressIndicator();
-                          }
-                          final departments = deptSnapshot.data!.docs
-                              .map((d) => d['departmentname'] as String)
-                              .toList();
-                          return DropdownButtonFormField<String>(
-                            decoration: const InputDecoration(
-                                labelText: 'Select Department',
-                                border: OutlineInputBorder()),
-                            value: selectedDepartment,
-                            items: departments.map((department) {
-                              return DropdownMenuItem<String>(
-                                value: department,
-                                child: Text(department),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedDepartment = newValue;
-                                selectedEmployee = null;
-                              });
-                            },
+                      DropdownButtonFormField<String>(
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                            labelText: 'Select Department',
+                            border: OutlineInputBorder()),
+                        value: departments.contains(selectedDepartment)
+                            ? selectedDepartment
+                            : null,
+                        items: departments.map((department) {
+                          return DropdownMenuItem<String>(
+                            value: department,
+                            child: Text(
+                              department,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                            ),
                           );
+                        }).toList(),
+                        selectedItemBuilder: (context) {
+                          return departments.map((department) {
+                            return Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                department,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                              ),
+                            );
+                          }).toList();
+                        },
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedDepartment = newValue;
+                            selectedEmployee = null;
+                          });
                         },
                       ),
                       const SizedBox(height: 16),
@@ -328,17 +345,62 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
                             final employees = empSnapshot.data!.docs
                                 .map((e) => e['name'] as String)
                                 .toList();
+                            print('Selected department: $selectedDepartment');
+                            print('Employees: $employees');
+                            if (employees.isEmpty) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                setState(() {
+                                  selectedEmployee = null;
+                                });
+                              });
+                              return DropdownButtonFormField<String>(
+                                isExpanded: true,
+                                decoration: const InputDecoration(
+                                    labelText: 'Select Employee',
+                                    border: OutlineInputBorder()),
+                                items: [
+                                  DropdownMenuItem<String>(
+                                    value: null,
+                                    child: Text('No employees found',
+                                        style: TextStyle(color: Colors.grey)),
+                                    enabled: false,
+                                  ),
+                                ],
+                                onChanged: null,
+                              );
+                            }
                             return DropdownButtonFormField<String>(
+                              isExpanded: true,
                               decoration: const InputDecoration(
                                   labelText: 'Select Employee',
                                   border: OutlineInputBorder()),
-                              value: selectedEmployee,
+                              value: employees.contains(selectedEmployee)
+                                  ? selectedEmployee
+                                  : null,
                               items: employees.map((employee) {
                                 return DropdownMenuItem<String>(
                                   value: employee,
-                                  child: Text(employee),
+                                  child: Text(
+                                    employee,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                  ),
                                 );
                               }).toList(),
+                              selectedItemBuilder: (context) {
+                                return employees.map((employee) {
+                                  return Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      employee,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: true,
+                                    ),
+                                  );
+                                }).toList();
+                              },
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedEmployee = newValue;

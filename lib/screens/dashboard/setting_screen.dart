@@ -123,7 +123,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 7),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
@@ -161,7 +161,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 7),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],

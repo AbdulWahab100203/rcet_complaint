@@ -32,7 +32,7 @@ class ComplaintBox extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Color(0xFF1A1A4B),
@@ -43,7 +43,7 @@ class ComplaintBox extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: Colors.white, size: 24),
+                Icon(icon, color: Colors.white, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -51,7 +51,7 @@ class ComplaintBox extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -60,7 +60,7 @@ class ComplaintBox extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 12,
                   ),
                 ),
               ],
