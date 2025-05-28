@@ -10,28 +10,28 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
-            accountName: const Text('Abdul Wahab'),
-            accountEmail: const Text('rcet.complaint@gmail.com'),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile.png'),
-            ),
-            otherAccountsPictures: [
-              IconButton(
-                icon: const Icon(Icons.settings, size: 28, color: Colors.white),
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, AppRoutes.setting); // Update route if needed
-                },
-              ),
-            ],
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/back.jpeg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // UserAccountsDrawerHeader(
+          //   accountName: const Text('Abdul Wahab'),
+          //   accountEmail: const Text('rcet.complaint@gmail.com'),
+          //   currentAccountPicture: CircleAvatar(
+          //     backgroundImage: AssetImage('assets/images/profile.png'),
+          //   ),
+          //   otherAccountsPictures: [
+          //     IconButton(
+          //       icon: const Icon(Icons.settings, size: 28, color: Colors.white),
+          //       onPressed: () {
+          //         Navigator.pushReplacementNamed(
+          //             context, AppRoutes.setting); // Update route if needed
+          //       },
+          //     ),
+          //   ],
+          //   decoration: const BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage("assets/images/back.jpeg"),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Home'),

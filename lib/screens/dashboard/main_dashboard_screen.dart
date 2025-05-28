@@ -4,7 +4,7 @@ import '../../widgets/custom_bottom_bar.dart';
 import '../../routes/app_routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/complaint.dart';
-import '../../models/employee.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ComplaintScreenMain extends StatefulWidget {
   const ComplaintScreenMain({Key? key}) : super(key: key);
@@ -16,6 +16,33 @@ class ComplaintScreenMain extends StatefulWidget {
 class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
   int _selectedIndex = 0;
   String selectedTab = "unassigned";
+  String? userName;
+  bool isLoadingUser = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserName();
+  }
+
+  Future<void> fetchUserName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance
+          .collection('User')
+          .doc(user.uid)
+          .get();
+      setState(() {
+        userName = doc.data()?['username'] ?? 'User';
+        isLoadingUser = false;
+      });
+    } else {
+      setState(() {
+        userName = 'User';
+        isLoadingUser = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +64,12 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            isLoadingUser
+                ? const SizedBox(
+                    height: 80,
+                    child: Center(child: CircularProgressIndicator()))
+                : AnimatedWelcomeHeader(userName: userName ?? 'User'),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Container(
@@ -239,7 +271,7 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
           });
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 9),
           decoration: BoxDecoration(
             color: isActive ? Colors.white : Colors.transparent,
             borderRadius: BorderRadius.circular(30),
@@ -447,6 +479,113 @@ class _ComplaintScreenMainState extends State<ComplaintScreenMain> {
           },
         );
       },
+    );
+  }
+}
+
+class AnimatedWelcomeHeader extends StatefulWidget {
+  final String userName;
+  final String? profileImageUrl; // Optional
+
+  const AnimatedWelcomeHeader(
+      {Key? key, required this.userName, this.profileImageUrl})
+      : super(key: key);
+
+  @override
+  State<AnimatedWelcomeHeader> createState() => _AnimatedWelcomeHeaderState();
+}
+
+class _AnimatedWelcomeHeaderState extends State<AnimatedWelcomeHeader>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 900),
+      vsync: this,
+    );
+    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _slideAnimation = Tween<Offset>(
+            begin: const Offset(0, 0.2), end: Offset.zero)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: Container(
+          margin: const EdgeInsets.all(18),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            gradient: const LinearGradient(
+              colors: [Color(0xFF1A1A4B), Color(0xFF3A3A8B)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 16,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 32,
+                backgroundColor: Colors.white,
+                backgroundImage: widget.profileImageUrl != null
+                    ? NetworkImage(widget.profileImageUrl!)
+                    : null,
+                child: widget.profileImageUrl == null
+                    ? const Icon(Icons.person,
+                        size: 36, color: Color(0xFF1A1A4B))
+                    : null,
+              ),
+              const SizedBox(width: 18),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Welcome back,',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.userName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
